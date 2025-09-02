@@ -12,7 +12,7 @@ export default function DashboardNav() {
   const path = location.pathname;
 
   return (
-    <div className="w-64 bg-sidebar border-gradient h-screen lg:flex flex-col fixed top-0 left-0 ">
+    <div className="hidden w-64 bg-sidebar border-gradient min-h-screen lg:flex flex-col fixed top-0 left-0 ">
       <div className="px-6 py-5 border-b border-primary">
         <SideMenuLogo />
       </div>

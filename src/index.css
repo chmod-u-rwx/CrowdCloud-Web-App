@@ -25,11 +25,7 @@
   --font-figtree: "Figtree", sans-serif;
   --font-rubik: "Rubik", sans-serif;
   --font-allerta: "Allerta", sans-serif;
-
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+    
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
@@ -53,6 +49,7 @@
   --color-accent: var(--accent);
   --color-accent-cyan: var(--accent-cyan);
   --color-accent-electric-blue: var(--accent-electric-blue);
+  --color-accent-shadow: var(--accent-shadow);
   --color-accent-foreground: var(--accent-foreground);
 
   --color-destructive: var(--destructive);
@@ -104,6 +101,7 @@
   --accent: #FF4D9E;
   --accent-cyan: #00F6FF;
   --accent-electric-blue: #3A86FF;
+  --accent-shadow: #676D8B;
   --accent-foreground: var(--foreground);
 
   --destructive: #FF5151;

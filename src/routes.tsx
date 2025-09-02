@@ -1,6 +1,6 @@
 import JobLayout from "@/components/layout/JobLayout";
 import NotFound from "@/pages/NotFound";
-import { JobPage } from "@/pages/JobPage";
+import JobPage from "@/pages/JobPage";
 
 export const routes = [
   {

@@ -1,6 +1,7 @@
-import JobStats from "@/components/jobs/JobStats"
+import { JobsMainContent } from "@/components/jobs/JobsMainContent"
+import { JobStats } from "@/components/jobs/JobStats"
 
-export const JobPage = () => {
+export default function JobPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -13,6 +14,7 @@ export const JobPage = () => {
 
       {/* Stats Card */}
       <JobStats />
+      <JobsMainContent />
     </div>
   )
 }
