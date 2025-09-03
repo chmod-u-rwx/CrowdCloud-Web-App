@@ -1,5 +1,8 @@
 import { useState } from "react";
+import type { CreateJobRequest } from "@/types";
+import { useJobs } from "@/hooks/useJobs";
 import { JobOverviewStats } from "@/components/jobs/JobOverviewStats";
+import { JobList } from "@/components/jobs/JobList";
 import { JobCreationForm } from "@/components/jobs/JobCreationForm";
 import {
   Tabs,
@@ -7,11 +10,9 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs";
-import type { CreateJobRequest } from "@/types";
-import { useJobs } from "@/hooks/useJobs";
 
-export const JobsMainContent = () => {
-  const { createJob, loading } = useJobs();
+export const JobMainContent = () => {
+  const { createJob, deleteJob, updateJobStatus, loading, jobs } = useJobs();
   const [activeTab, setActiveTab] = useState("overview");
 
   const handleCreateJob = async (jobData: CreateJobRequest) => {
@@ -34,6 +35,14 @@ export const JobsMainContent = () => {
         <JobCreationForm 
           onCreateJob={handleCreateJob}
           loading={loading}
+        />
+      </TabsContent>
+
+      <TabsContent value="jobs" className="space-y-6">
+        <JobList 
+          jobs={jobs}
+          onDeleteJob={deleteJob}
+          onUpdateStatus={updateJobStatus}
         />
       </TabsContent>
     </Tabs>

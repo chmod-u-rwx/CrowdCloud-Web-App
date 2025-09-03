@@ -1,4 +1,4 @@
-import { JobsMainContent } from "@/components/jobs/JobsMainContent"
+import { JobMainContent } from "@/components/jobs/JobMainContent"
 import { JobStats } from "@/components/jobs/JobStats"
 
 export default function JobPage() {
@@ -14,7 +14,7 @@ export default function JobPage() {
 
       {/* Main Contents */}
       <JobStats />
-      <JobsMainContent />
+      <JobMainContent />
     </div>
   )
 }

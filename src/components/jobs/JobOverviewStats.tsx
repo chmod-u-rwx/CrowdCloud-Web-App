@@ -1,7 +1,7 @@
 import { useJobs } from "@/hooks/useJobs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { getJobStats } from "@/utils/jobStats";
+import { getJobStats } from "@/utils/utility";
 import { Activity, Cpu } from "lucide-react";
 
 export const JobOverviewStats = () => {
@@ -73,9 +73,9 @@ export const JobOverviewStats = () => {
           </div>
 
           <div className="pt-2 border-t">
-            <div className="flex justify-between text-base">
+            <div className="flex justify-between md:text-base text-sm ">
               <span>Estimated Monthly Cost</span>
-              <span className="text-medium text-confirm">
+              <span className="text-medium text-confirm text-sm md:text-base">
                 ₱{((stats.totalCPUUsed * 0.08 + stats.totalRAMUsed * 0.09) * 24 * 30).toFixed(2)}
               </span>
             </div>

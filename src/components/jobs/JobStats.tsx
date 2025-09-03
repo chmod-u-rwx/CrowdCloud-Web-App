@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { useJobs } from "@/hooks/useJobs";
-import { getJobStats } from "@/utils/jobStats";
+import { getJobStats } from "@/utils/utility";
 import { Activity, Cloud } from "lucide-react";
 
 export const JobStats = () => {
