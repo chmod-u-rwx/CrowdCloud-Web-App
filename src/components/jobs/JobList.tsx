@@ -201,7 +201,7 @@ export const JobList = ({
                 <Button
                   size="sm"
                   variant="outline"
-                  onClick={() => navigate(`/jobs/${job.jobId}`)}
+                  onClick={() => navigate(`/dashboard/jobs/${job.jobId}`)}
                   className="flex items-center gap-1"
                 >
                   <Eye className="w-3 h-3" />
