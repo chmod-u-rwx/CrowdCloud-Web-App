@@ -1,8 +1,8 @@
-import { useJobs } from "@/hooks/useJobs"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Activity, Cpu } from "lucide-react"
-import { getJobStats } from "@/utils/jobStats"
+import { useJobs } from "@/hooks/useJobs";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { getJobStats } from "@/utils/jobStats";
+import { Activity, Cpu } from "lucide-react";
 
 export const JobOverviewStats = () => {
   const { jobs } = useJobs();
@@ -61,14 +61,14 @@ export const JobOverviewStats = () => {
           <div className="space-y-2">
             <div className="flex justify-between text-base">
               <span className="text-secondary-foreground">Total CPU Cores: <strong className="text-foreground">{stats.totalCPUUsed}</strong></span>
-              <span className="font-medium">₱{((stats.totalCPUUsed * 0.2) * 24 * 30).toFixed(2)}</span>
+              <span className="font-medium">₱{((stats.totalCPUUsed * 0.09) * 24 * 30).toFixed(2)}</span>
             </div>
           </div>
 
           <div className="space-y-2">
             <div className="flex justify-between text-base">
               <span className="text-secondary-foreground">Total RAM (GB): <strong className="text-foreground">{stats.totalRAMUsed}</strong></span>
-              <span className="font-medium">₱{((stats.totalRAMUsed * 0.1) * 24 * 30).toFixed(2)}</span>
+              <span className="font-medium">₱{((stats.totalRAMUsed * 0.09) * 24 * 30).toFixed(2)}</span>
             </div>
           </div>
 
@@ -76,7 +76,7 @@ export const JobOverviewStats = () => {
             <div className="flex justify-between text-base">
               <span>Estimated Monthly Cost</span>
               <span className="text-medium text-confirm">
-                ₱{((stats.totalCPUUsed * 0.2 + stats.totalRAMUsed * 0.1) * 24 *30).toFixed(2)}
+                ₱{((stats.totalCPUUsed * 0.08 + stats.totalRAMUsed * 0.09) * 24 * 30).toFixed(2)}
               </span>
             </div>
           </div>

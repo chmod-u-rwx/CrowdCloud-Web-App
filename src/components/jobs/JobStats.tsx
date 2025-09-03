@@ -58,5 +58,5 @@ export const JobStats = () => {
         </CardContent>
       </Card>
     </div>
-  )
-}
+  );
+};

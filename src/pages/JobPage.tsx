@@ -12,7 +12,7 @@ export default function JobPage() {
         </p>
       </div>
 
-      {/* Stats Card */}
+      {/* Main Contents */}
       <JobStats />
       <JobsMainContent />
     </div>
