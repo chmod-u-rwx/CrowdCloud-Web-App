@@ -19,3 +19,22 @@ export const getJobStatusColor = (status: Job["status"]) => {
     default: return "bg-secondary border-border";
   }
 };
+
+export const getRequestStatusColor = (status: "success" | "failed" | "pending" | string) => {
+  switch (status) {
+    case 'success': return 'text-confirm';
+    case 'failed': return 'text-destructive';
+    case 'pending': return 'text-pending';
+    default: return 'text-gray-600';
+  }
+};
+
+// const getSeverityColor = (severity) => {
+//   switch (severity) {
+//     case 'low': return 'bg-blue-100 text-blue-800';
+//     case 'medium': return 'bg-yellow-100 text-yellow-800';
+//     case 'high': return 'bg-orange-100 text-orange-800';
+//     case 'critical': return 'bg-red-100 text-red-800';
+//     default: return 'bg-gray-100 text-gray-800';
+//   }
+// };
