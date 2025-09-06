@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react"
 import { createMockJobs } from "@/mock/mock-data";
 import type { CreateJobRequest, Job } from "@/types"
+import { useJobsStore } from "@/stores/useJobsStore";
 
 const STORAGE_KEY = import.meta.env.VITE_STORAGE_KEY
 
 export const useJobs = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    useJobsStore.getState().setJobs(jobs)
+  }, [jobs]);
 
   useEffect(() => {
     const initializeJobs = () => {
