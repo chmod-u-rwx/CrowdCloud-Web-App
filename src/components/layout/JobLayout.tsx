@@ -4,7 +4,7 @@ import GlowBackground from "../utils/GlowBackground";
 
 export default function JobLayout() {
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col">
       <GlowBackground />
       <div className="flex z-2">
         <DashboardNav />

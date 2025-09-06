@@ -17,3 +17,53 @@ export const jobCreateSchema = yup.object().shape({
     .max(128, "RAM must not exceed 128 GB")
     .required("RAM is required"),
 });
+
+const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&._]{8,}$/;
+
+export const userSchema = yup.object().shape({
+  // userId: yup.string().optional(),
+  username: yup.string().required("Username is required"),
+  firstName: yup.string().required("First Name is required"),
+  lastName: yup.string().required("Last Name is required"),
+  email: yup.string().email("Enter a valid email address").required("Valid email is required"),
+  password: yup
+    .string()
+    .matches(PASSWORD_REGEX, {
+      message: "Password must be at least 8 characters, include uppercase, lowercase, number, and special character"
+    })
+    .required("Password is required"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password")], "Password must match")
+    .required("Confirm your password"),
+  phoneNumber: yup
+    .string()
+    .matches(/^(09\d{9}|(\+639|639)\d{9})$/, "Please enter a valid PH phone number")
+    .required("Phone number is required"),
+  role: yup.string().oneOf(["individual"]).required(),
+});
+
+export const companyUserSchema = yup.object().shape({
+  // userId: yup.string().optional(),
+  username: yup.string().required("Username is required"),
+  firstName: yup.string().required("First Name is required"),
+  lastName: yup.string().required("Last Name is required"),
+  email: yup.string().email("Enter a valid email address").required("Valid email is required"),
+  companyName: yup.string().required("Comapny Name is required"),
+  companyAddress: yup.string().required("Company Address is required"),
+  password: yup
+    .string()
+    .matches(PASSWORD_REGEX, {
+      message: "Password must be at least 8 characters, include uppercase, lowercase, number, and special character"
+    })
+    .required("Password is required"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password")], "Password must match")
+    .required("Confirm your password"),
+  phoneNumber: yup
+    .string()
+    .matches(/^(09\d{9}|(\+639|639)\d{9})$/, "Please enter a valid PH phone number")
+    .required("Phone number is required"),
+  role: yup.string().oneOf(["company"]).required(),
+});
