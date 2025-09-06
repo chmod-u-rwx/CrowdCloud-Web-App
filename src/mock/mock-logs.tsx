@@ -130,4 +130,4 @@ export default function useMockLogs(job: Job | undefined) {
   }, [job]);
 
   return { mockTrafficData, mockRequestLogs, mockErrorLogs };
-}
+};
