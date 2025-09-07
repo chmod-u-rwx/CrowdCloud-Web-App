@@ -44,7 +44,7 @@ export const userSchema = yup.object().shape({
 });
 
 export const companyUserSchema = yup.object().shape({
-  // userId: yup.string().optional(),
+  // userId: yup.string().optional(), //Uncomment when User Model is finalize
   username: yup.string().required("Username is required"),
   firstName: yup.string().required("First Name is required"),
   lastName: yup.string().required("Last Name is required"),
@@ -66,4 +66,9 @@ export const companyUserSchema = yup.object().shape({
     .matches(/^(09\d{9}|(\+639|639)\d{9})$/, "Please enter a valid PH phone number")
     .required("Phone number is required"),
   role: yup.string().oneOf(["company"]).required(),
+});
+
+export const loginSchema = yup.object().shape({
+  email: yup.string().email("Enter a valid email address").required("Email is required"),
+  password: yup.string().required("Password is required"),
 });

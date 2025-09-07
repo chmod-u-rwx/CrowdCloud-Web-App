@@ -36,6 +36,20 @@ export interface NavItem {
   external?: boolean;
 };
 
+export interface UserAuth {
+  accessToken: string;
+  tokenType: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  userId: string;
+  role: "individual" | "company";
+  companyName?: string;
+  companyAddress?: string;
+}
+
 export interface IndividualUserCredentials {
   userId?: string;
   username: string;
@@ -61,3 +75,8 @@ export interface CompanyUserCredentials {
   confirmPassword: string;
   role: "company";
 };
+
+export interface LoginCredentials {
+  email: string;
+  password: string;
+}

@@ -1,10 +1,10 @@
 import type { CompanyUserCredentials } from "@/types";
-import { useForm } from "react-hook-form";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { companyUserSchema } from "@/schema/schemas";
-import { Button } from "../ui/button";
+import { useForm } from "react-hook-form";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 
 type CompanySignupFormData = Omit<CompanyUserCredentials, "userId">;

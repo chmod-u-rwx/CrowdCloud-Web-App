@@ -11,7 +11,7 @@ export const JobOverviewStats = () => {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-3">
-      <Card className="shadow-md shadow-accent-shadow border-0 backdrop-blur-sm">
+      <Card className="shadow shadow-accent-shadow border-0 backdrop-blur-sm">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 md:text-2xl font-rubik">
             <Activity className="w-5 h-5 text-primary-two" />
@@ -50,7 +50,7 @@ export const JobOverviewStats = () => {
       </Card>
 
       {/* Resource Allocation */}
-      <Card className="shadow-md shadow-accent-shadow border-0 backdrop-blur-sm">
+      <Card className="shadow shadow-accent-shadow border-0 backdrop-blur-sm">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 md:text-2xl font-rubik">
             <Cpu className="w-5 h-5 text-accent" />

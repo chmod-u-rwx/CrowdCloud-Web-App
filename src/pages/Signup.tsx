@@ -25,7 +25,7 @@ export const Signup = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <GlowBackground />
-      <main className="flex-1 justify-center items-center flex z-4 py-12">
+      <main className="flex-1 md:flex justify-center items-center z-4 py-12">
         <div className="container mx-auto px-4">
           <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-12">
             <div className="flex flex-col lg:w-5xl w-full">
@@ -76,7 +76,8 @@ export const Signup = () => {
             </div>
           </div>
         </div>
-        <div className="w-full mx-auto flex items-center justify-center">
+        {/* Logo */}
+        <div className="w-full mx-auto flex items-center justify-center mr-60">
           <AuthLogo />
         </div>
       </main>

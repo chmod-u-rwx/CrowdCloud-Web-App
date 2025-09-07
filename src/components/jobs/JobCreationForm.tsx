@@ -79,7 +79,7 @@ export const JobCreationForm = ({
   };
 
   return (
-    <Card className="w-full max-w-2xl mt-3 mx-auto shadow-md shadow-accent-shadow border-0 bg-secondary backdrop-blur-sm">
+    <Card className="w-full max-w-2xl mt-3 mx-auto shadow shadow-accent-shadow border-0 bg-secondary backdrop-blur-sm">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl font-bold font-rubik flex items-center gap-2">
           <Plus className="w-6 h-6 text-primary-two" />
