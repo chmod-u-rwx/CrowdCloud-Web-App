@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { jobCreateSchema } from "@/schema/schemas";
-import type { CreateJobRequest } from "@/types";
 import type { InferType } from "yup";
+import type { JobCreate } from "@/types";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -18,18 +18,18 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Cpu, Loader2, MemoryStick, Plus } from "lucide-react";
-
+import { useAuthStore } from "@/stores/useAuthStore";
 
 type JobCreateFormData = InferType<typeof jobCreateSchema>;
 
 interface JobCreationFormProps {
-  onCreateJob: (job: CreateJobRequest) => Promise<void>;
+  onCreateJob: (job: JobCreate) => Promise<void>;
   loading?: boolean;
 }
 
 export const JobCreationForm = ({
   onCreateJob,
-  loading = false
+  loading = false,
 }: JobCreationFormProps) => {
   const {
     register,
@@ -40,27 +40,32 @@ export const JobCreationForm = ({
   } = useForm<JobCreateFormData>({
     resolver: yupResolver(jobCreateSchema),
     defaultValues: {
-      jobName: "",
-      jobURL: "",
-      jobDescription: "",
-      cpu: 2,
-      ram: 4,
+      job_name: "",
+      repo_url: "",
+      job_description: "",
+      cpu: 0,
+      ram: 0,
     },
   });
 
   const cpu = watch("cpu");
   const ram = watch("ram");
 
+  const user = useAuthStore.getState().user;
+
   const onSubmit = async (jobData: JobCreateFormData) => {
-    if (!jobData) {
+    if (!jobData) return;
+
+    if (!user?.user_id) {
+      toast.error("You must be logged in to create a job.");
       return;
     }
 
-    const jobRequest: CreateJobRequest = {
-      jobId: "", 
-      jobName: jobData.jobName,
-      jobUrl: jobData.jobURL,
-      jobDescription: jobData.jobDescription,
+    const jobRequest: JobCreate = {
+      user_id: user?.user_id ?? "",
+      job_name: jobData.job_name,
+      repo_url: jobData.repo_url,
+      job_description: jobData.job_description,
       resources: {
         cpu: jobData.cpu,
         ram: jobData.ram,
@@ -70,11 +75,12 @@ export const JobCreationForm = ({
     try {
       await onCreateJob(jobRequest);
       console.log("Form Data:", jobData);
-      
+
       toast.success("Job created successfully");
       reset();
-    } catch (error) {
-      toast.error("Failed to create job. Please try again.")
+    } catch (error: any) {
+      console.error("Create Job failed:", error?.response?.data || error);
+      toast.error("Failed to create job. Please try again.");
     }
   };
 
@@ -91,7 +97,7 @@ export const JobCreationForm = ({
       </CardHeader>
 
       <CardContent>
-        <form 
+        <form
           onSubmit={handleSubmit(onSubmit, () => {
             toast.error("Please fix the form errors before submitting");
           })}
@@ -100,63 +106,63 @@ export const JobCreationForm = ({
           <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="jobName">
+                <Label htmlFor="job_name">
                   Job Name <span className="text-destructive">*</span>
                 </Label>
                 <Input
-                  {...register("jobName")}
+                  {...register("job_name")}
                   placeholder="Enter Job Name"
                   className={`bg-input border-2 ${
-                    errors.jobName ? "border-destructive" : ""
+                    errors.job_name ? "border-destructive" : ""
                   }`}
                 />
-                {errors.jobName && (
+                {errors.job_name && (
                   <span className="text-sm text-destructive">
-                    {errors.jobName.message}
+                    {errors.job_name.message}
                   </span>
                 )}
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="jobURL">
+                <Label htmlFor="repo_url">
                   Job URL <span className="text-destructive">*</span>
                 </Label>
                 <Input
-                  {...register("jobURL")}
+                  {...register("repo_url")}
                   placeholder="https://example.com/user/repo"
                   className={`bg-input border-2 ${
-                    errors.jobURL ? "border-destructive" : ""
+                    errors.repo_url ? "border-destructive" : ""
                   }`}
                 />
-                {errors.jobURL && (
+                {errors.repo_url && (
                   <span className="text-sm text-destructive">
-                    {errors.jobURL.message}
+                    {errors.repo_url.message}
                   </span>
                 )}
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="jobDescription">
+              <Label htmlFor="job_description">
                 Job Description <span className="text-destructive">*</span>
               </Label>
               <Textarea
-                {...register("jobDescription")}
+                {...register("job_description")}
                 placeholder="Describe what your job does, its requirements, and expected output..."
                 className={`bg-input border-2 min-h-[100px] ${
-                  errors.jobDescription ? "border-destructive" : ""
+                  errors.job_description ? "border-destructive" : ""
                 }`}
               />
-              {errors.jobDescription && (
+              {errors.job_description && (
                 <span className="text-sm text-destructive">
-                  {errors.jobDescription.message}
+                  {errors.job_description.message}
                 </span>
               )}
             </div>
           </div>
 
           <Separator className="bg-primary" />
-          
+
           {/* Resource Allocation */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
@@ -174,7 +180,7 @@ export const JobCreationForm = ({
                 </Label>
                 <Input
                   type="number"
-                  {...register("cpu")}
+                  {...register("cpu", { valueAsNumber: true })}
                   placeholder="2 Cores"
                   min={1}
                   max={32}
@@ -187,7 +193,9 @@ export const JobCreationForm = ({
                     {errors.cpu.message}
                   </span>
                 )}
-                <p className="text-xs text-muted-foreground">Range: 1 - 32 cores</p>
+                <p className="text-xs text-muted-foreground">
+                  Range: 1 - 32 cores
+                </p>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="ram">
@@ -196,7 +204,7 @@ export const JobCreationForm = ({
                 </Label>
                 <Input
                   type="number"
-                  {...register("ram")}
+                  {...register("ram", { valueAsNumber: true })}
                   placeholder="2 GB"
                   min={1}
                   max={128}
@@ -209,23 +217,34 @@ export const JobCreationForm = ({
                     {errors.ram.message}
                   </span>
                 )}
-                <p className="text-xs text-muted-foreground">Range: 1 - 128 GB</p>
+                <p className="text-xs text-muted-foreground">
+                  Range: 1 - 128 GB
+                </p>
               </div>
             </div>
 
             {/* Resource Summary */}
             <div className="p-4 bg-purple-200 rounded-lg border border-primary">
-              <h4 className="font-medium text-purple-900 mb-2 font-rubik">Resource Summary</h4>
+              <h4 className="font-medium text-purple-900 mb-2 font-rubik">
+                Resource Summary
+              </h4>
               <div className="flex gap-4">
-                <Badge variant="secondary" className="bg-accent text-foreground">
+                <Badge
+                  variant="secondary"
+                  className="bg-accent text-foreground"
+                >
                   {cpu} CPU Core{Number(cpu) === 1 ? "" : "s"}
                 </Badge>
-                <Badge variant="secondary" className="bg-accent text-foreground">
+                <Badge
+                  variant="secondary"
+                  className="bg-accent text-foreground"
+                >
                   {ram} GB RAM
                 </Badge>
               </div>
               <p className="text-sm text-purple-900 mt-2">
-                Estimated cost: ~₱{(Number(cpu) * 0.08 + Number(ram) * 0.09).toFixed(2)} /secs
+                Estimated cost: ~₱
+                {(Number(cpu) * 0.08 + Number(ram) * 0.09).toFixed(2)} /secs
               </p>
             </div>
           </div>

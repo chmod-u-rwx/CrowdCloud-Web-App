@@ -1,4 +1,3 @@
-import type { CompanyUserCredentials } from "@/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { companyUserSchema } from "@/schema/schemas";
 import { useForm } from "react-hook-form";
@@ -6,8 +5,20 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import { signupUser } from "@/services/api";
 
-type CompanySignupFormData = Omit<CompanyUserCredentials, "userId">;
+type CompanySignupFormData = {
+  username: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  company_name: string;
+  company_address: string;
+  phone_number: string;
+  password: string;
+  confirm_password: string;
+  role: "company";
+};
 
 export const CompanySignupForm = () => {
   const {
@@ -19,63 +30,67 @@ export const CompanySignupForm = () => {
     resolver: yupResolver(companyUserSchema),
     defaultValues: {
       username: "",
-      firstName: "",
-      lastName: "",
+      first_name: "",
+      last_name: "",
       email: "",
-      companyName: "",
-      companyAddress: "",
-      phoneNumber: "",
+      company_name: "",
+      company_address: "",
+      phone_number: "",
       password: "",
-      confirmPassword: "",
+      confirm_password: "",
       role: "company",
     },
   });
 
-  const onSubmit = (data: CompanyUserCredentials) => {
-    // Logic for sign up
-    console.log("Sign up data:", data);
-    reset();
+  const onSubmit = async (data: CompanySignupFormData) => {
+    try {
+      await signupUser(data);
+      console.log("Sign up data:", data);
+      reset();
+    } catch (error) {
+      console.error(error)
+    }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="firstName">
+          <Label htmlFor="first_name">
             First Name <span className="text-destructive">*</span>
           </Label>
           <Input
-            id="firstName"
-            {...register("firstName")}
+            id="first_name"
+            {...register("first_name")}
             placeholder="Juan"
             className={`bg-input border-2 ${
-              errors.firstName ? "border-destructive" : ""
+              errors.first_name ? "border-destructive" : ""
             }`}
             required
           />
-          {errors.firstName && (
+          {errors.first_name && (
             <span className="text-sm text-destructive">
-              {errors.firstName.message}
+              {errors.first_name.message}
             </span>
           )}
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="lastName">
+          <Label htmlFor="last_name">
             Last Name <span className="text-destructive">*</span>
           </Label>
           <Input
-            id="lastName"
-            {...register("lastName")}
+            id="last_name"
+            {...register("last_name")}
             placeholder="Dela Cruz"
             className={`bg-input border-2 ${
-              errors.lastName ? "border-destructive" : ""
+              errors.last_name ? "border-destructive" : ""
             }`}
             required
           />
-          {errors.lastName && (
+          {errors.last_name && (
             <span className="text-sm text-destructive">
-              {errors.lastName.message}
+              {errors.last_name.message}
             </span>
           )}
         </div>
@@ -100,21 +115,21 @@ export const CompanySignupForm = () => {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="phoneNumber">
+          <Label htmlFor="phone_number">
             Contact Number <span className="text-destructive">*</span>
           </Label>
           <Input
-            id="phoneNumber"
-            {...register("phoneNumber")}
+            id="phone_number"
+            {...register("phone_number")}
             placeholder="+639123456789"
             className={`bg-input border-2 ${
-              errors.phoneNumber ? "border-destructive" : ""
+              errors.phone_number ? "border-destructive" : ""
             }`}
             required
           />
-          {errors.phoneNumber && (
+          {errors.phone_number && (
             <span className="text-sm text-destructive">
-              {errors.phoneNumber.message}
+              {errors.phone_number.message}
             </span>
           )}
         </div>
@@ -139,41 +154,41 @@ export const CompanySignupForm = () => {
           )}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="companyName">
+          <Label htmlFor="company_name">
             Company Name <span className="text-destructive">*</span>
           </Label>
           <Input
-            id="companyName"
-            {...register("companyName")}
+            id="company_name"
+            {...register("company_name")}
             placeholder="Computer Solution Inc."
             className={`bg-input border-2 ${
-              errors.companyName ? "border-destructive" : ""
+              errors.company_name ? "border-destructive" : ""
             }`}
             required
           />
-          {errors.companyName && (
+          {errors.company_name && (
             <span className="text-sm text-destructive">
-              {errors.companyName.message}
+              {errors.company_name.message}
             </span>
           )}
         </div>
       </div>
       <div className="space-y-2">
-        <Label htmlFor="companyAddress">
+        <Label htmlFor="company_address">
           Company Address <span className="text-destructive">*</span>
         </Label>
         <Input
-          id="companyAddress"
-          {...register("companyAddress")}
+          id="company_address"
+          {...register("company_address")}
           placeholder="Enter your company address"
           className={`bg-input border-2 ${
-            errors.companyAddress ? "border-destructive" : ""
+            errors.company_address ? "border-destructive" : ""
           }`}
           required
         />
-        {errors.companyAddress && (
+        {errors.company_address && (
           <span className="text-sm text-destructive">
-            {errors.companyAddress.message}
+            {errors.company_address.message}
           </span>
         )}
       </div>
@@ -199,22 +214,22 @@ export const CompanySignupForm = () => {
           )}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="confirmPassword">
+          <Label htmlFor="confirm_password">
             Confirm Password <span className="text-destructive">*</span>
           </Label>
           <Input
             type="password"
-            id="confirmPassword"
-            {...register("confirmPassword")}
+            id="confirm_password"
+            {...register("confirm_password")}
             placeholder="Confirm Password"
             className={`bg-input border-2 ${
-              errors.confirmPassword ? "border-destructive" : ""
+              errors.confirm_password ? "border-destructive" : ""
             }`}
             required
           />
-          {errors.confirmPassword && (
+          {errors.confirm_password && (
             <span className="text-sm text-destructive">
-              {errors.confirmPassword.message}
+              {errors.confirm_password.message}
             </span>
           )}
         </div>

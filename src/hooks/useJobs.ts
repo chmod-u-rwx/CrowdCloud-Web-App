@@ -1,81 +1,72 @@
 import { useEffect, useState } from "react"
-import { createMockJobs } from "@/mock/mock-data";
-import type { CreateJobRequest, Job } from "@/types"
 import { useJobsStore } from "@/stores/useJobsStore";
-
-const STORAGE_KEY = import.meta.env.VITE_STORAGE_KEY
+import { useAuthStore } from "@/stores/useAuthStore";
+import { createJob, deleteJob, listJobs, updateJob } from "@/services/api";
+import type { JobCreate, JobUpdate } from "@/types";
 
 export const useJobs = () => {
-  const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const jobs = useJobsStore((state) => state.jobs);
+  const setJobs = useJobsStore((state) => state.setJobs);
 
+  const user = useAuthStore((state) => state.user);
+
+  // Fetch jobs for the logged-in user
   useEffect(() => {
-    useJobsStore.getState().setJobs(jobs)
-  }, [jobs]);
+    const fetchJobs = async () => {
+      if(!user?.user_id) return;
+      setLoading(true);
 
-  useEffect(() => {
-    const initializeJobs = () => {
-      // const savedJobs = localStorage.getItem(STORAGE_KEY);
-
-      const mockJobs = createMockJobs();
-      setJobs(mockJobs);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(mockJobs));
+      try {
+        const jobsList = await listJobs({ user_id: user.user_id });
+        setJobs(jobsList);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    initializeJobs();
-  }, []);
+    fetchJobs();
+  }, [user?.user_id, setJobs]);
 
-  useEffect(() => {
-    if (jobs.length > 0) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(jobs));
-    }
-  }, [jobs]);
-
-  const createJob = async (jobData: CreateJobRequest): Promise<Job> => {
+  // Create job
+  const handleCreateJob = async (jobData: JobCreate) => {
     setLoading(true);
-
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 500));
-
-    const newJob: Job = {
-      ...jobData,
-      jobId: crypto.randomUUID(),
-      status: "pending",
-      createdAt: new Date(),
-    };
-
-    setJobs(prevJobs => [newJob, ...prevJobs]);
-    setLoading(false);
-
-    return newJob;
+    try {
+      const newJob = await createJob(jobData);
+      setJobs([newJob, ...jobs]);
+      return newJob;
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const deleteJob = (jobId: string) => {
-    setJobs(prevJobs => prevJobs.filter(job => job.jobId !== jobId));
+  // Update job
+  const handleUpdateJob = async (job_id: string, updateData: JobUpdate) => {
+    setLoading(true);
+    try {
+      const updatedJob = await updateJob(job_id, updateData);
+      setJobs(jobs.map((job) => (job.job_id === job_id ? updatedJob : job)));
+      return updatedJob;
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const updateJobStatus = (jobId: string, status: Job["status"]) => {
-    setJobs(prevJobs =>
-      prevJobs.map(job =>
-        job.jobId === jobId ? { ...job, status } : job
-      )
-    );
-  };
-
-  const updateJob = (updatedJob: Job) => {
-    setJobs(prevJobs => 
-      prevJobs.map(job => 
-        job.jobId === updatedJob.jobId ? updatedJob : job
-      )
-    );
+  const handleDeleteJob = async (job_id: string) => {
+    setLoading(true);
+    try {
+      await deleteJob(job_id);
+      setJobs(jobs.filter((job) => job.job_id !== job_id));
+    } finally {
+      setLoading(false);
+    }
   };
 
   return {
-    createJob,
-    deleteJob,
-    updateJobStatus,
-    updateJob,
     jobs,
     loading,
+    createJob: handleCreateJob,
+    updateJob: handleUpdateJob,
+    deleteJob: handleDeleteJob,
   };
 };

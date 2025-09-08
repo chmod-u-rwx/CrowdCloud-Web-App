@@ -41,31 +41,31 @@ export const JobList = ({
   const stats = getJobStats(jobs);
 
   const handleJobStatusUpdate = async (
-    jobId: string,
+    job_id: string,
     newStatus: Job["status"]
   ) => {
-    setLoadingJobs((prev) => new Set(prev).add(jobId));
+    setLoadingJobs((prev) => new Set(prev).add(job_id));
 
     // For Mock up logic: Simulate API delay
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    onUpdateStatus(jobId, newStatus);
+    onUpdateStatus(job_id, newStatus);
     setLoadingJobs((prev) => {
       const newSet = new Set(prev);
-      newSet.delete(jobId);
+      newSet.delete(job_id);
       return newSet;
     });
   };
 
   const getStatusActions = (job: Job) => {
-    const isLoading = loadingJobs.has(job.jobId);
+    const isLoading = loadingJobs.has(job.job_id);
 
     switch (job.status) {
       case "pending":
         return (
           <Button
             size="sm"
-            onClick={() => handleJobStatusUpdate(job.jobId, "running")}
+            onClick={() => handleJobStatusUpdate(job.job_id, "running")}
             disabled={isLoading}
             className="flex items-center gap-1"
           >
@@ -77,7 +77,7 @@ export const JobList = ({
         return (
           <Button
             size="sm"
-            onClick={() => handleJobStatusUpdate(job.jobId, "completed")}
+            onClick={() => handleJobStatusUpdate(job.job_id, "completed")}
             disabled={isLoading}
             className="flex items-center gap-1"
           >
@@ -89,7 +89,7 @@ export const JobList = ({
         return (
           <Button
             size="sm"
-            onClick={() => handleJobStatusUpdate(job.jobId, "pending")}
+            onClick={() => handleJobStatusUpdate(job.job_id, "pending")}
             disabled={isLoading}
             className="flex items-center gap-1"
           >
@@ -121,19 +121,21 @@ export const JobList = ({
       {/* Job List */}
       {jobs.map((job) => (
         <Card
-          key={job.jobId}
+          key={job.job_id}
           className="shadow shadow-accent-shadow border-0 bg-secondary backdrop-blur-sm hover:shadow-lg transition-shadow"
         >
           <CardHeader className="pb-3">
             <div className="flex items-start justify-between">
               <div className="space-y-1">
                 <CardTitle className="text-lg font-bold">
-                  {job.jobName}
+                  {job.job_name}
                 </CardTitle>
                 <CardDescription className="flex items-center gap-2 text-sm">
                   <Calendar className="w-4 h-4" />
                   Created{" "}
-                  {formatDistanceToNow(job.createdAt, { addSuffix: true })}
+                  {job.created_at
+                    ? formatDistanceToNow(job.created_at, { addSuffix: true })
+                    : "Unknown"}
                 </CardDescription>
               </div>
 
@@ -148,7 +150,7 @@ export const JobList = ({
           <CardContent className="pt-0">
             <div className="space-y-4">
               <p className="text-secondary-foreground line-clamp-2 md:text-base">
-                {job.jobDescription}
+                {job.job_description}
               </p>
             </div>
 
@@ -156,7 +158,7 @@ export const JobList = ({
             <div className="flex items-center gap-2 my-4">
               <ExternalLink className="w-4 h-4 text-secondary-foreground" />
               <code className="bg-input text-sm px-2 py-1 rounded text-muted-foreground">
-                {job.jobUrl}
+                {job.repo_url}
               </code>
             </div>
 
@@ -194,14 +196,14 @@ export const JobList = ({
             {/* Actions */}
             <div className="flex items-center justify-between pt-4 border-t my-4">
               <div className="flex items-center gap-2">
-                <p className="text-secondary-foreground">Job ID: {job.jobId}</p>
+                <p className="text-secondary-foreground">Job ID: {job.job_id}</p>
               </div>
 
               <div className="flex items-center gap-4">
                 <Button
                   size="sm"
                   variant="outline"
-                  onClick={() => navigate(`/dashboard/jobs/${job.jobId}`)}
+                  onClick={() => navigate(`/dashboard/jobs/${job.job_id}`)}
                   className="flex items-center gap-1"
                 >
                   <Eye className="w-3 h-3" />
@@ -215,7 +217,7 @@ export const JobList = ({
                 <Button
                   size="sm"
                   variant="destructive"
-                  onClick={() => onDeleteJob(job.jobId)}
+                  onClick={() => onDeleteJob(job.job_id)}
                   className="flex items-center gap-1 text-destructive bg-transparent border border-destructive hover:text-destructive/90 hover:border-red-700 hover:bg-transparent"
                 >
                   <Trash2 className="w-3 h-3" />

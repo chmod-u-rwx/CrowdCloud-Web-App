@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -8,6 +8,8 @@ import { useForm } from "react-hook-form";
 import type { LoginCredentials } from "@/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "@/schema/schemas";
+import { loginUser } from "@/services/api";
+import { useAuthStore } from "@/stores/useAuthStore";
 
 export const LoginForm = () => {
   const {
@@ -23,9 +25,18 @@ export const LoginForm = () => {
     },
   });
 
+  const navigate = useNavigate();
+
   const onSubmit = async (data: LoginCredentials) => {
-    console.log("Login data:", data);
-    reset();
+    try {
+      const authResponse = await loginUser(data);
+      useAuthStore.getState().setUser(authResponse);
+      console.log("Login data:", data);
+      reset();
+      navigate("/dashboard/jobs")
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const [rememberMe, setRememberMe] = useState<boolean>(false);
