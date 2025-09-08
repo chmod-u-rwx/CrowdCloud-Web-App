@@ -10,7 +10,7 @@ export const JobStats = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      <Card className="bg-gradient-to-b from-background to-accent-cyan border-0 rounded-lg shadow-md shadow-accent-shadow">
+      <Card className="bg-secondary border-0 rounded-lg shadow shadow-accent-shadow">
         <CardContent className="p-4">
           <div className="flex items-center justify-between">
             <div>
@@ -22,7 +22,7 @@ export const JobStats = () => {
         </CardContent>
       </Card>
 
-      <Card className="bg-gradient-to-b from-background to-emerald-400 border-0 rounded-lg shadow-md shadow-accent-shadow">
+      <Card className="bg-secondary border-0 rounded-lg shadow shadow-accent-shadow">
         <CardContent className="p-4">
           <div className="flex items-center justify-between">
             <div>
@@ -34,7 +34,7 @@ export const JobStats = () => {
         </CardContent>
       </Card>
 
-      <Card className="bg-gradient-to-b from-background to-accent border-0 rounded-lg shadow-md shadow-accent-shadow">
+      <Card className="bg-secondary border-0 rounded-lg shadow shadow-accent-shadow">
         <CardContent className="p-4">
           <div className="flex items-center justify-between">
             <div>
@@ -46,7 +46,7 @@ export const JobStats = () => {
         </CardContent>
       </Card>
 
-      <Card className="bg-gradient-to-b from-background to-amber-500 border-0 rounded-lg shadow-lg shadow-accent-shadow">
+      <Card className="bg-secondary border-0 rounded-lg shadow shadow-accent-shadow">
         <CardContent className="p-4">
           <div className="flex items-center justify-between">
             <div>

@@ -1,9 +1,9 @@
 import * as yup from "yup";
 
 export const jobCreateSchema = yup.object().shape({
-  jobName: yup.string().required("Job Name is required"),
-  jobURL: yup.string().url("Must be a valid URL").required("Job URL is required"),
-  jobDescription: yup.string().required("Description is required"),
+  job_name: yup.string().required("Job Name is required"),
+  repo_url: yup.string().url("Must be a valid URL").required("Job URL is required"),
+  job_description: yup.string().required("Description is required"),
   cpu: yup
     .number()
     .typeError("CPU must be a number")
@@ -23,8 +23,8 @@ const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@
 export const userSchema = yup.object().shape({
   // userId: yup.string().optional(),
   username: yup.string().required("Username is required"),
-  firstName: yup.string().required("First Name is required"),
-  lastName: yup.string().required("Last Name is required"),
+  first_name: yup.string().required("First Name is required"),
+  last_name: yup.string().required("Last Name is required"),
   email: yup.string().email("Enter a valid email address").required("Valid email is required"),
   password: yup
     .string()
@@ -32,11 +32,11 @@ export const userSchema = yup.object().shape({
       message: "Password must be at least 8 characters, include uppercase, lowercase, number, and special character"
     })
     .required("Password is required"),
-  confirmPassword: yup
+  confirm_password: yup
     .string()
     .oneOf([yup.ref("password")], "Password must match")
     .required("Confirm your password"),
-  phoneNumber: yup
+  phone_number: yup
     .string()
     .matches(/^(09\d{9}|(\+639|639)\d{9})$/, "Please enter a valid PH phone number")
     .required("Phone number is required"),
@@ -46,22 +46,22 @@ export const userSchema = yup.object().shape({
 export const companyUserSchema = yup.object().shape({
   // userId: yup.string().optional(), //Uncomment when User Model is finalize
   username: yup.string().required("Username is required"),
-  firstName: yup.string().required("First Name is required"),
-  lastName: yup.string().required("Last Name is required"),
+  first_name: yup.string().required("First Name is required"),
+  last_name: yup.string().required("Last Name is required"),
   email: yup.string().email("Enter a valid email address").required("Valid email is required"),
-  companyName: yup.string().required("Comapny Name is required"),
-  companyAddress: yup.string().required("Company Address is required"),
+  company_name: yup.string().required("Comapny Name is required"),
+  company_address: yup.string().required("Company Address is required"),
   password: yup
     .string()
     .matches(PASSWORD_REGEX, {
       message: "Password must be at least 8 characters, include uppercase, lowercase, number, and special character"
     })
     .required("Password is required"),
-  confirmPassword: yup
+  confirm_password: yup
     .string()
     .oneOf([yup.ref("password")], "Password must match")
     .required("Confirm your password"),
-  phoneNumber: yup
+  phone_number: yup
     .string()
     .matches(/^(09\d{9}|(\+639|639)\d{9})$/, "Please enter a valid PH phone number")
     .required("Phone number is required"),

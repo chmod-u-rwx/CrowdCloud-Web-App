@@ -13,9 +13,9 @@ import { Separator } from "@/components/ui/separator";
 import { Calendar, Cpu, MemoryStick, Settings } from "lucide-react";
 
 interface EditFormData {
-  jobName: string;
-  jobURL: string;
-  jobDescription: string;
+  job_name: string;
+  repo_url: string;
+  job_description: string;
   cpu: number;
   ram: number;
 }
@@ -23,7 +23,7 @@ interface EditFormData {
 export const JobDetailsOverview = () => {
   const { jobId } = useParams<{ jobId: string }>();
   const jobs = useJobsStore((state) => state.jobs);
-  const job = jobs.find((j) => j.jobId === jobId);
+  const job = jobs.find((j) => j.job_id === jobId);
 
   const isEditing = useJobsStore((state) => state.isEditing);
   const setIsEditing = useJobsStore((state) => state.setIsEditing);
@@ -40,9 +40,9 @@ export const JobDetailsOverview = () => {
   } = useForm<EditFormData>({
     resolver: yupResolver(jobCreateSchema),
     defaultValues: {
-      jobName: job?.jobName || "",
-      jobURL: job?.jobUrl || "",
-      jobDescription: job?.jobDescription || "",
+      job_name: job?.job_name || "",
+      repo_url: job?.repo_url || "",
+      job_description: job?.job_description || "",
       cpu: job?.resources.cpu || 1,
       ram: job?.resources.ram || 1,
     },
@@ -52,9 +52,9 @@ export const JobDetailsOverview = () => {
   useEffect(() => {
     if (job) {
       reset({
-        jobName: job.jobName,
-        jobURL: job.jobUrl,
-        jobDescription: job.jobDescription,
+        job_name: job.job_name,
+        repo_url: job.repo_url,
+        job_description: job.job_description,
         cpu: job.resources.cpu,
         ram: job.resources.ram,
       });
@@ -69,9 +69,9 @@ export const JobDetailsOverview = () => {
 
         updateJob({
           ...job,
-          jobName: data.jobName,
-          jobUrl: data.jobURL,
-          jobDescription: data.jobDescription,
+          job_name: data.job_name,
+          repo_url: data.repo_url,
+          job_description: data.job_description,
           resources: {
             cpu: data.cpu,
             ram: data.ram,
@@ -105,15 +105,15 @@ export const JobDetailsOverview = () => {
                     Job Name
                   </Label>
                   <Input
-                    {...register("jobName")}
+                    {...register("job_name")}
                     placeholder="Enter Job Name"
                     className={`bg-input border-2 ${
-                      errors.jobName ? "border-destructive" : ""
+                      errors.job_name ? "border-destructive" : ""
                     }`}
                   />
-                  {errors.jobName && (
+                  {errors.job_name && (
                     <span className="text-sm text-destructive">
-                      {errors.jobName.message}
+                      {errors.job_name.message}
                     </span>
                   )}
                 </div>
@@ -123,15 +123,15 @@ export const JobDetailsOverview = () => {
                     Job URL
                   </Label>
                   <Input
-                    {...register("jobURL")}
+                    {...register("repo_url")}
                     placeholder="Enter Job URL"
                     className={`bg-input border-2 ${
-                      errors.jobURL ? "border-destructive" : ""
+                      errors.repo_url ? "border-destructive" : ""
                     }`}
                   />
-                  {errors.jobURL && (
+                  {errors.repo_url && (
                     <span className="text-sm text-destructive">
-                      {errors.jobURL.message}
+                      {errors.repo_url.message}
                     </span>
                   )}
                 </div>
@@ -141,15 +141,15 @@ export const JobDetailsOverview = () => {
                     Job Description
                   </Label>
                   <Textarea
-                    {...register("jobDescription")}
+                    {...register("job_description")}
                     placeholder="Describe what your job does, its requirements, and expected output..."
                     className={`bg-input border-2 ${
-                      errors.jobDescription ? "border-destructive" : ""
+                      errors.job_description ? "border-destructive" : ""
                     }`}
                   />
-                  {errors.jobDescription && (
+                  {errors.job_description && (
                     <span className="text-sm text-destructive">
-                      {errors.jobDescription.message}
+                      {errors.job_description.message}
                     </span>
                   )}
                 </div>
@@ -160,21 +160,21 @@ export const JobDetailsOverview = () => {
                   <Label className="text-md font-medium text-muted-foreground">
                     Job Name
                   </Label>
-                  <p className="font-bold text-xl">{job?.jobName}</p>
+                  <p className="font-bold text-xl">{job?.job_name}</p>
                 </div>
 
                 <div className="space-y-2">
                   <Label className="text-md font-medium text-muted-foreground">
                     Job URL
                   </Label>
-                  <p className="font-medium text-md">{job?.jobUrl}</p>
+                  <p className="font-medium text-md">{job?.repo_url}</p>
                 </div>
 
                 <div className="space-y-2">
                   <Label className="text-md font-medium text-muted-foreground">
                     Job Description
                   </Label>
-                  <p className="font-medium text-md">{job?.jobDescription}</p>
+                  <p className="font-medium text-md">{job?.job_description}</p>
                 </div>
 
                 <div className="space-y-2">
@@ -183,7 +183,7 @@ export const JobDetailsOverview = () => {
                   </Label>
                   <p className="font-medium text-secondary-foreground text-md flex items-center gap-2">
                     <Calendar className="w-4 h-4 text-muted-foreground" />
-                    {job?.createdAt ? format(job.createdAt, "PPpp") : "N/A"}
+                    {job?.created_at ? format(job.created_at, "PPpp") : "N/A"}
                   </p>
                 </div>
               </>

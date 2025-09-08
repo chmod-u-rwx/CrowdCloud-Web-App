@@ -10,7 +10,7 @@ export const JobDetailsHeader = () => {
   const navigate = useNavigate();
 
   const jobs = useJobsStore((state) => state.jobs);
-  const job = jobs.find((j) => j.jobId === jobId);
+  const job = jobs.find((j) => j.job_id === jobId);
   
   const isEditing = useJobsStore((state) => state.isEditing);
   const setIsEditing = useJobsStore((state) => state.setIsEditing);
@@ -31,7 +31,7 @@ export const JobDetailsHeader = () => {
       <div className="space-y-4">
         <div className="flex flex-col justify-start">
           <div className="flex justify-between">
-            <p className="text-3xl font-rubik font-semibold">{job?.jobName}</p>
+            <p className="text-3xl font-rubik font-semibold">{job?.job_name}</p>
             <Badge
               className={`${getJobStatusColor(
                 job?.status ?? "pending"
@@ -42,7 +42,7 @@ export const JobDetailsHeader = () => {
                 : "Pending"}
             </Badge>
           </div>
-          <p className="my-2 text-xl text-secondary-foreground">Job ID: <strong>{job?.jobId}</strong></p>
+          <p className="my-2 text-xl text-secondary-foreground">Job ID: <strong>{job?.job_id}</strong></p>
         </div>
 
         <div className="flex justify-between">
