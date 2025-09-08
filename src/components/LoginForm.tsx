@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link,  useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -31,9 +31,9 @@ export const LoginForm = () => {
     try {
       const authResponse = await loginUser(data);
       useAuthStore.getState().setUser(authResponse);
-      console.log("Login data:", data);
       reset();
-      navigate("/dashboard/jobs")
+      navigate("/dashboard/jobs", { replace: true })
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }
