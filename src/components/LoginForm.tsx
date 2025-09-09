@@ -32,7 +32,7 @@ export const LoginForm = () => {
       const authResponse = await loginUser(data);
       useAuthStore.getState().setUser(authResponse);
       reset();
-      navigate("/dashboard/jobs", { replace: true })
+      navigate("/", { replace: true })
       window.location.reload();
     } catch (error) {
       console.error(error);

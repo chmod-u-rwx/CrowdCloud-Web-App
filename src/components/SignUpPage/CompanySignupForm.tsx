@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { signupUser } from "@/services/api";
+import { useNavigate } from "react-router-dom";
 
 type CompanySignupFormData = {
   username: string;
@@ -21,6 +22,8 @@ type CompanySignupFormData = {
 };
 
 export const CompanySignupForm = () => {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -47,6 +50,8 @@ export const CompanySignupForm = () => {
       await signupUser(data);
       console.log("Sign up data:", data);
       reset();
+      navigate("/login", { replace: true })
+      window.location.reload();
     } catch (error) {
       console.error(error)
     }
