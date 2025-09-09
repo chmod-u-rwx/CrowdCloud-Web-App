@@ -1,6 +1,6 @@
 import type { Job } from "@/types";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getJobStats, getJobStatusColor } from "@/utils/utility";
 import { formatDistanceToNow } from "date-fns";
 import {
@@ -195,8 +195,15 @@ export const JobList = ({
 
             {/* Actions */}
             <div className="flex items-center justify-between pt-4 border-t my-4">
-              <div className="flex items-center gap-2">
+              <div className="flex items gap-2 flex-col">
                 <p className="text-secondary-foreground">Job ID: {job.job_id}</p>
+                <Link
+                  to="https://github.com/0CottonBuds"
+                  className="flex items-center text-secondary-foreground hover:underline hover:text-primary-two"
+                >
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  {job.job_id}.cottonbuds.dev
+                </Link>
               </div>
 
               <div className="flex items-center gap-4">

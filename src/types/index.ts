@@ -1,5 +1,7 @@
 import type { LucideIcon } from "lucide-react";
 
+// --- Job Shape ---
+
 export type JobStatus = "pending" | "running" | "completed" | "failed";
 
 export interface JobResources {
@@ -35,17 +37,7 @@ export interface JobUpdate {
   status?: JobStatus;
 }
 
-export interface DashboardItem {
-  title: string;
-  href: string;
-  icon: LucideIcon;
-};
-
-export interface NavItem {
-  label: string;
-  href: string;
-  external?: boolean;
-};
+// --- User Shape ---
 
 export type UserRole = "individual" | "company";
 
@@ -101,3 +93,23 @@ export interface UserUpdate {
   email?: string;
   password?: string;
 }
+
+// --- Utils ---
+
+export interface DashboardItem {
+  title: string;
+  href: string;
+  icon: LucideIcon;
+};
+
+export interface NavItem {
+  label: string;
+  href: string;
+  external?: boolean;
+};
+
+export interface AuthButton {
+  label: string;
+  href: string;
+  variant?: "default" | "ghost" | "outline";
+};

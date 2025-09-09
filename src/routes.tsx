@@ -1,12 +1,20 @@
+import MainLayout from "@/components/layout/MainLayout";
 import JobLayout from "@/components/layout/JobLayout";
 import NotFound from "@/pages/NotFound";
 import JobPage from "@/pages/JobPage";
 import Login from "@/pages/Login";
+import JobAnalytics from "@/pages/JobAnalytics";
 import { JobDetail } from "@/pages/JobDetail";
 import { Signup } from "@/pages/Signup";
-import JobAnalytics from "@/pages/JobAnalytics";
+import LandingPage from "@/pages/LandingPage";
 
 export const routes = [
+  {
+    element: <MainLayout />,
+    children: [
+      { index: true, element: <LandingPage /> }
+    ]
+  },
   {
     element: <JobLayout />,
     children: [

@@ -2,14 +2,31 @@ import SideMenuLogo from "@/components/utils/SideMenuLogo";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DASHBOARD_ITEM } from "@/types/navItem";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { LogOut, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAuthStore } from "@/stores/useAuthStore";
 
 export default function DashboardNav() {
   const location = useLocation();
+  const navigate = useNavigate();
   const path = location.pathname;
+  const user = useAuthStore((state) => state.user);
+
+  const avatarFallback = user
+    ? `${user.first_name?.[0] ?? ""}${user.last_name?.[0] ?? ""}`.toUpperCase()
+    : "U";
+  const fullName = user
+    ? `${user.first_name} ${user.last_name}`
+    : "Guest";
+  const email = user?.email ?? "";
+
+  const handleLogout = () => {
+    useAuthStore.getState().logout()
+    navigate("/", { replace: true });
+    window.location.reload();
+  }
 
   return (
     <div className="hidden w-64 bg-sidebar border-gradient min-h-screen lg:flex flex-col fixed top-0 left-0 ">
@@ -22,14 +39,15 @@ export default function DashboardNav() {
           <div className="flex items-center px-3 py-2 mb-2">
             <Avatar className="h-10 w-10 mr-3">
               <AvatarImage
-                src="https://randomuser.me/api/portraits/women/81.jpg"
-                alt=""
+                src="https://randomuser.me/api/portraits/lego/1.jpg"
+                alt={fullName}
               />
-              <AvatarFallback>JD</AvatarFallback>
+              <AvatarFallback>{avatarFallback}</AvatarFallback>
             </Avatar>
 
-            <div className="space-y-0.5">
-              <div className="font-medium">Juan Dela Cruz</div>
+            <div className="space-y-1">
+              <div className="font-medium">{fullName}</div>
+              <div className="text-sm text-secondary-foreground">{email}</div>
             </div>
           </div>
         </div>
@@ -79,6 +97,7 @@ export default function DashboardNav() {
 
             <Button
               variant="ghost"
+              onClick={handleLogout}
               className="w-full justify-start text-destructive hover:text-destructive/80 hover:bg-destructive/10"
             >
               <LogOut className="mr-3 h-4 w-4" />
