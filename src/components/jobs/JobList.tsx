@@ -1,6 +1,6 @@
 import type { Job } from "@/types";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getJobStats, getJobStatusColor } from "@/utils/utility";
 import { formatDistanceToNow } from "date-fns";
 import {
@@ -18,6 +18,7 @@ import {
   Cpu,
   ExternalLink,
   Eye,
+  Globe,
   MemoryStick,
   Pause,
   Play,
@@ -61,7 +62,7 @@ export const JobList = ({
     const isLoading = loadingJobs.has(job.job_id);
 
     switch (job.status) {
-      case "pending":
+      case "paused":
         return (
           <Button
             size="sm"
@@ -89,7 +90,7 @@ export const JobList = ({
         return (
           <Button
             size="sm"
-            onClick={() => handleJobStatusUpdate(job.job_id, "pending")}
+            onClick={() => handleJobStatusUpdate(job.job_id, "paused")}
             disabled={isLoading}
             className="flex items-center gap-1"
           >
@@ -107,6 +108,26 @@ export const JobList = ({
       default:
         return null;
     }
+  };
+
+  if (jobs.length === 0) {
+    return (
+      <Card className="shadow-lg border-0 bg-secondary backdrop-blur-sm mt-4">
+        <CardContent className="p-8 text-center">
+          <div className="space-y-4">
+            <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto">
+              <Cpu className="w-8 h-8 " />
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-2">No Jobs Yet</h3>
+              <p className="text-secondary-foreground">
+                Create your first compute job to get started with the CrowdCloud network.
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
   };
 
   return (
@@ -140,7 +161,7 @@ export const JobList = ({
               </div>
 
               <div className="flex items-center gap-2">
-                <Badge className={`${getJobStatusColor(job.status)} border`}>
+                <Badge className={`${getJobStatusColor(job.status)} border rounded-full border-foreground`}>
                   {job.status.charAt(0).toUpperCase() + job.status.slice(1)}
                 </Badge>
               </div>
@@ -197,13 +218,12 @@ export const JobList = ({
             <div className="flex items-center justify-between pt-4 border-t my-4">
               <div className="flex items gap-2 flex-col">
                 <p className="text-secondary-foreground">Job ID: {job.job_id}</p>
-                <Link
-                  to="https://github.com/0CottonBuds"
-                  className="flex items-center text-secondary-foreground hover:underline hover:text-primary-two"
+                <span
+                  className="flex items-center text-secondary-foreground hover:text-primary-two"
                 >
-                  <ExternalLink className="w-4 h-4 mr-2" />
+                  <Globe className="w-4 h-4 mr-2" />
                   {job.job_id}.cottonbuds.dev
-                </Link>
+                </span>
               </div>
 
               <div className="flex items-center gap-4">

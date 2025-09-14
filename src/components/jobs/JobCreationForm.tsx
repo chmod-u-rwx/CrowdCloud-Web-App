@@ -244,7 +244,7 @@ export const JobCreationForm = ({
               </div>
               <p className="text-sm text-purple-900 mt-2">
                 Estimated cost: ~₱
-                {(Number(cpu) * 0.08 + Number(ram) * 0.09).toFixed(2)} /secs
+                {(Number(cpu) * 0.03 + Number(ram) * 0.05).toFixed(2)} /secs
               </p>
             </div>
           </div>

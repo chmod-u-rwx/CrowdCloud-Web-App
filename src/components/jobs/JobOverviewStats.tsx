@@ -20,9 +20,9 @@ export const JobOverviewStats = () => {
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="flex justify-between items-center">
-            <span className="text-base">Pending</span>
+            <span className="text-base">Paused</span>
             <Badge variant="outline" className="bg-yellow-100 text-yellow-700 border-yellow-700 rounded">
-              {jobs.filter(j => j.status === "pending").length}
+              {jobs.filter(j => j.status === "paused").length}
             </Badge>
           </div>
 

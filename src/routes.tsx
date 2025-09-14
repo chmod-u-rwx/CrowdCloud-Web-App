@@ -3,10 +3,11 @@ import JobLayout from "@/components/layout/JobLayout";
 import NotFound from "@/pages/NotFound";
 import JobPage from "@/pages/JobPage";
 import Login from "@/pages/Login";
-import JobAnalytics from "@/pages/JobAnalytics";
+import { JobAnalytics } from "@/pages/JobAnalytics";
 import { JobDetail } from "@/pages/JobDetail";
 import { Signup } from "@/pages/Signup";
 import LandingPage from "@/pages/LandingPage";
+import Dashboard from "./pages/Dashboard";
 
 export const routes = [
   {
@@ -18,7 +19,7 @@ export const routes = [
   {
     element: <JobLayout />,
     children: [
-      // { index: true, element: <JobPage /> },
+      { index: true, path: "/dashboard", element: <Dashboard /> },
       { path: "/dashboard/jobs", element: <JobPage /> },
       { path: "/dashboard/analytics", element: <JobAnalytics /> }
     ],

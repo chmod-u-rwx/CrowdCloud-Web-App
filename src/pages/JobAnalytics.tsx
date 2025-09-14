@@ -1,7 +1,15 @@
-import React from "react";
+import AnalyticsHeader from "@/components/analytics/AnalyticsHeader"
+import { ChartAnalytics } from "@/components/analytics/ChartAnalytics";
+import { KeyMetrics } from "@/components/analytics/KeyMetrics";
+import { TrafficMetrics } from "@/components/analytics/TrafficMetrics";
 
-export default function JobAnalytics() {
+export const JobAnalytics = () => {
   return (
-    <div>JobAnalytics</div>
+    <div className="space-y-8">
+      <AnalyticsHeader />
+      <KeyMetrics />
+      <TrafficMetrics />
+      <ChartAnalytics />
+    </div>
   )
-}
+};

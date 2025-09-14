@@ -30,7 +30,7 @@ export const Navbar = () => {
 
           {/* Desktop Navbar */}
           <nav className="hidden md:flex items-center lg:space-x-6 space-x-4">
-            <div className="h-10 bg-gray-800 px-4 flex items-center rounded-3xl space-x-4">
+            <div className="h-10 bg-gray-800 px-4 flex items-center rounded-3xl gap-4 space-x-4 mx-4">
               {NAV_ITEMS.map((item) => (
                 <Link
                   key={item.href}
@@ -87,7 +87,7 @@ export const Navbar = () => {
                     className="cursor-pointer"
                     onClick={() => {
                       if (user && user.username) {
-                        navigate(`/dashboard/jobs`);
+                        navigate(`/dashboard`);
                       }
                     }}
                   >

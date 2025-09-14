@@ -274,22 +274,22 @@ export const JobDetailsOverview = () => {
               </h4>
               <div className="space-y-1 text-sm">
                 <div className="flex justify-between">
-                  <span>CPU Cost (₱0.08 /seconds):</span>
+                  <span>CPU Cost (₱0.03 /seconds):</span>
                   <span className="font-medium">
                     ₱
                     {(
                       ((isEditing ? job?.resources.cpu : job?.resources.cpu) ??
-                        0) * 0.08
+                        0) * 0.03
                     ).toFixed(2)}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span>RAM Cost (₱0.09 /seconds):</span>
+                  <span>RAM Cost (₱0.05 /seconds):</span>
                   <span className="font-medium">
                     ₱
                     {(
                       ((isEditing ? job?.resources.ram : job?.resources.ram) ??
-                        0) * 0.09
+                        0) * 0.05
                     ).toFixed(2)}
                   </span>
                 </div>
@@ -300,10 +300,10 @@ export const JobDetailsOverview = () => {
                     {(
                       ((isEditing ? job?.resources.cpu : job?.resources.cpu) ??
                         0) *
-                        0.08 +
+                        0.03 +
                       ((isEditing ? job?.resources.ram : job?.resources.ram) ??
                         0) *
-                        0.09
+                        0.05
                     ).toFixed(2)}
                   </span>
                 </div>

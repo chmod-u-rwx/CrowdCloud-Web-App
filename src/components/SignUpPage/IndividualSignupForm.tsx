@@ -44,7 +44,6 @@ export const IndividualSignupForm = () => {
   const onSubmit = async (data: IndividualSignupFormData) => {
     try {
       await signupUser(data);
-      console.log("Sign up data:", data);
       reset();
       navigate("/login", { replace: true })
       window.location.reload();
