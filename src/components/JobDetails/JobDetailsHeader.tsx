@@ -34,12 +34,12 @@ export const JobDetailsHeader = () => {
             <p className="text-3xl font-rubik font-semibold">{job?.job_name}</p>
             <Badge
               className={`${getJobStatusColor(
-                job?.status ?? "pending"
+                job?.status ?? "paused"
               )} border`}
             >
               {job?.status
                 ? job.status.charAt(0).toUpperCase() + job.status.slice(1)
-                : "Pending"}
+                : "Paused"}
             </Badge>
           </div>
           <p className="my-2 text-xl text-secondary-foreground">Job ID: <strong>{job?.job_id}</strong></p>

@@ -15,7 +15,7 @@ import { Badge } from "../ui/badge";
 export default function JobErrors() {
   const { jobId } = useParams();
   const jobs = useJobsStore((state) => state.jobs);
-  const job = jobs.find((j) => j.jobId === jobId);
+  const job = jobs.find((j) => j.job_id === jobId);
 
   const { mockErrorLogs } = useMockLogs(job);
 

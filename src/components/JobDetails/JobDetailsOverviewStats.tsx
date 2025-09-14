@@ -7,7 +7,7 @@ import { AlertTriangle, CheckCircle, Clock, Send } from "lucide-react";
 export const JobDetailsOverviewStats = () => {
   const { jobId } = useParams();
   const jobs = useJobsStore((state) => state.jobs);
-  const job = jobs.find((j) => j.jobId === jobId);
+  const job = jobs.find((j) => j.job_id === jobId);
 
   const { mockTrafficData, mockErrorLogs } = useMockLogs(job);
 

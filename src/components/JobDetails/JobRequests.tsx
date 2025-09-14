@@ -16,7 +16,7 @@ import { getRequestStatusColor } from "@/utils/utility";
 export default function JobRequests() {
   const { jobId } = useParams();
   const jobs = useJobsStore((state) => state.jobs);
-  const job = jobs.find((j) => j.jobId === jobId);
+  const job = jobs.find((j) => j.job_id === jobId);
 
   const { mockRequestLogs } = useMockLogs(job);
 

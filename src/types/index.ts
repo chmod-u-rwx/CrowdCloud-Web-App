@@ -2,7 +2,7 @@ import type { LucideIcon } from "lucide-react";
 
 // --- Job Shape ---
 
-export type JobStatus = "pending" | "running" | "completed" | "failed";
+export type JobStatus = "paused" | "running" | "completed" | "failed";
 
 export interface JobResources {
   cpu: number;
@@ -17,7 +17,7 @@ export interface Job {
   job_description: string;
   resources: JobResources;
   status: JobStatus;
-  created_at?: string;
+  created_at?: Date;
   updated_at?: string;
 };
 
@@ -95,6 +95,8 @@ export interface UserUpdate {
 }
 
 // --- Utils ---
+
+export type TimePeriod = "daily" | "weekly" | "monthly"
 
 export interface DashboardItem {
   title: string;

@@ -90,8 +90,8 @@
   --popover-foreground: var(--foreground);
 
   --primary: oklch(33.363% 0.16983 302.262);
-  --primary-two: oklch(67.838% 0.18576 291.658);
-  --primary-three: oklch(94.381% 0.02875 9.505);
+  --primary-two: #9c7dff;
+  --primary-three: #ffe5e8;
   --primary-foreground: var(--foreground);
 
   --secondary: #12142A;
