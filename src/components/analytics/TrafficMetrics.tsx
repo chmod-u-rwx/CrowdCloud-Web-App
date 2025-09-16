@@ -1,7 +1,7 @@
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { useJobsStore } from "@/stores/useJobsStore";
 import { StatsCard } from "@/components/analytics/StatsCard";
-import { Globe, MemoryStick, Zap } from "lucide-react";
+import { BriefcaseBusiness, Globe, MemoryStick, Zap } from "lucide-react";
 
 export const TrafficMetrics = () => {
   const jobs = useJobsStore((state) => state.jobs);
@@ -34,7 +34,7 @@ export const TrafficMetrics = () => {
         title="Job Success Rate"
         value={analytics.avgRequestsPerJob.toFixed(0)}
         subtitle="Per job average"
-        icon={Globe}
+        icon={BriefcaseBusiness}
       />
     </div>
   )

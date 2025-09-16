@@ -1,13 +1,15 @@
-import { useJobs } from "@/hooks/useJobs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { getJobStats } from "@/utils/utility";
 import { Activity, Cpu } from "lucide-react";
+import { useJobsStore } from "@/stores/useJobsStore";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 export const JobOverviewStats = () => {
-  const { jobs } = useJobs();
-
+  const jobs = useJobsStore((state) => state.jobs);
   const stats = getJobStats(jobs);
+
+  const { analytics } = useAnalytics({ jobs })
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-3">
@@ -61,14 +63,14 @@ export const JobOverviewStats = () => {
           <div className="space-y-2">
             <div className="flex justify-between text-base">
               <span className="text-secondary-foreground">Total CPU Cores: <strong className="text-foreground">{stats.totalCPUUsed}</strong></span>
-              <span className="font-medium">₱{((stats.totalCPUUsed * 0.09) * 24 * 30).toFixed(2)}</span>
+              <span className="font-medium">₱{analytics.cpuMonthlyCost.toFixed(2)}</span>
             </div>
           </div>
 
           <div className="space-y-2">
             <div className="flex justify-between text-base">
               <span className="text-secondary-foreground">Total RAM (GB): <strong className="text-foreground">{stats.totalRAMUsed}</strong></span>
-              <span className="font-medium">₱{((stats.totalRAMUsed * 0.09) * 24 * 30).toFixed(2)}</span>
+              <span className="font-medium">₱{analytics.ramMonthlyCost.toFixed(2)}</span>
             </div>
           </div>
 
@@ -76,7 +78,7 @@ export const JobOverviewStats = () => {
             <div className="flex justify-between md:text-base text-sm ">
               <span>Estimated Monthly Cost</span>
               <span className="text-medium text-confirm text-sm md:text-base">
-                ₱{((stats.totalCPUUsed * 0.08 + stats.totalRAMUsed * 0.09) * 24 * 30).toFixed(2)}
+                ₱{analytics.estimatedMonthlyCost.toFixed(2)}
               </span>
             </div>
           </div>

@@ -62,6 +62,11 @@ export default function DashboardNav() {
               <Link
                 key={index}
                 to={item.href}
+                onClick={() => {
+                  if (path === item.href) {
+                    window.location.reload();
+                  }
+                }}
                 className={cn(
                   "flex items-center px-3 py-2 rounded text-sm transition-colors",
                   path === item.href
