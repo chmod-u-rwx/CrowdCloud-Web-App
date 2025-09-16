@@ -11,7 +11,7 @@ export const KeyMetrics = () => {
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       <StatsCard
         title="Total Requests"
-        value={analytics.totalRequests.toLocaleString()}
+        value={analytics.totalRequests}
         subtitle="All Time"
         icon={Send}
         trend={analytics.requestsLast7Days > 0 ? "up" : "neutral"}

@@ -1,8 +1,9 @@
 import type { Job, JobResources, TimePeriod } from "@/types";
-import { 
-  eachDayOfInterval, 
-  eachMonthOfInterval, 
-  eachWeekOfInterval, 
+import {  
+  endOfMonth, 
+  endOfWeek, 
+  startOfMonth, 
+  startOfWeek, 
   subDays 
 } from "date-fns";
 
@@ -16,11 +17,18 @@ export function getJobStats(jobs: Job[]) {
   };
 };
 
-export function getResourceCost(resources: JobResources) {
+export function getResourceCost(
+  resources: JobResources,
+  rates: {
+    cpu_core_cost_per_second: number;
+    ram_gb_cost_per_second: number 
+  }
+) {
   return {
-    cpuCost: resources.cpu * 0.03,
-    ramCost: resources.ram * 0.05,
-    totalCost: resources.cpu * 0.03 + resources.ram * 0.05,
+    cpuCost: resources.cpu * rates.cpu_core_cost_per_second,
+    ramCost: resources.ram * rates.ram_gb_cost_per_second,
+    totalCost: resources.cpu * rates.cpu_core_cost_per_second 
+    + resources.ram * rates.ram_gb_cost_per_second,
   };
 };
 
@@ -72,16 +80,30 @@ export const getDateRange = (period: TimePeriod) => {
   const now = new Date;
 
   switch(period) {
-    case "daily": return { start: subDays(now, 7), intervals: eachDayOfInterval };
-    case "weekly": return { start: subDays(now, 8), intervals: eachWeekOfInterval };
-    case "monthly": return { start: subDays(now, 12), intervals: eachMonthOfInterval };
+    case "daily": 
+      return {
+        start: subDays(now, 7),
+        end: now,
+      };
+
+    case "weekly":
+      return {
+        start: startOfWeek(subDays(now, 20)),
+        end: endOfWeek(now)
+      };
+
+    case "monthly":
+      return {
+        start: startOfMonth(subDays(now, 365)),
+        end: endOfMonth(now)
+      };
   }
 };
 
 export const getPeriodLabel = (period: TimePeriod) => {
   switch(period) {
     case "daily": return "Last 7 days";
-    case "weekly": return "Last 8 weeks";
+    case "weekly": return "Last 4 weeks";
     case "monthly": return "Last 12 months";
   }
 };

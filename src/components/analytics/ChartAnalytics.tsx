@@ -1,5 +1,8 @@
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { useJobsStore } from "@/stores/useJobsStore";
+import { useAnalyticsStore } from "@/stores/useAnalyticsStore";
+import { getPeriodLabel } from "@/utils/utility";
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
@@ -14,6 +17,8 @@ import {
   BarChart,
   CartesianGrid,
   Cell,
+  Line,
+  LineChart,
   Pie,
   PieChart,
   ResponsiveContainer,
@@ -21,13 +26,51 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { Badge } from "@/components/ui/badge";
-import { getPeriodLabel } from "@/utils/utility";
-import { BriefcaseBusiness, Cpu, PhilippinePeso, PieChartIcon, Send } from "lucide-react";
+import {
+  BriefcaseBusiness,
+  Cpu,
+  PhilippinePeso,
+  PieChartIcon,
+  Send
+} from "lucide-react";
 
 export const ChartAnalytics = () => {
   const jobs = useJobsStore((state) => state.jobs);
-  const { analytics, selectedPeriod } = useAnalytics({ jobs });
+  const selectedPeriod = useAnalyticsStore((state) => state.selectedPeriod);
+  const { analytics } = useAnalytics({ jobs });
+
+  // Custom Tooltip for Cost Analysis
+  const CostTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-primary/30 p-2 rounded shadow text-md">
+          <div><strong>Date:</strong> {label}</div>
+          {payload.map((entry: any, idx: number) => (
+            <div key={idx}>
+              <strong>{entry.name}:</strong> ₱{entry.value.toFixed(2)}
+            </div>
+          ))}
+        </div>
+      );
+    }
+    return null;
+  };
+
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-primary/30 p-2 rounded shadow text-md">
+          <div><strong>Date:</strong> {label}</div>
+          {payload.map((entry: any, idx: number) => (
+            <div key={idx}>
+              <strong>{entry.name}:</strong> {entry.value}
+            </div>
+          ))}
+        </div>
+      );
+    }
+    return null
+  };
 
   return (
     <>
@@ -40,7 +83,7 @@ export const ChartAnalytics = () => {
               Job Request Status
             </CardTitle>
             <CardDescription>
-              Current status of your job requests
+              Current status of your job requests - {getPeriodLabel(selectedPeriod)}
             </CardDescription>
           </CardHeader>
 
@@ -75,13 +118,13 @@ export const ChartAnalytics = () => {
                 <Badge
                   key={index}
                   variant="outline"
-                  className="flex items-center gap-1"
+                  className="flex items-center gap-1 rounded-full"
+                  style={{ backgroundColor: item.colors }}
                 >
                   <div
-                    className="w-2 h-2 rounded-full"
-                    style={{ backgroundColor: item.colors }}
+                    className="font-semibold"
                   >
-                    {item.value}: {item.value}
+                    {item.name}: {item.value}
                   </div>
                 </Badge>
               ))}
@@ -104,25 +147,18 @@ export const ChartAnalytics = () => {
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={analytics.trafficTrend}>
-                  {/* Uncomment this after getting real data */}
-
-                  {/* <defs>
-                  <linearGradient id="colorSuccess" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#FFE5E8" stopOpacity={0.8}/>
-                    <stop offset="95%" stopColor="#9C7DFF" stopOpacity={0.2}/>
-                  </linearGradient>
-                </defs> */}
-
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="date" />
                   <YAxis />
-                  <Tooltip />
+                  <Tooltip 
+                    content={<CustomTooltip />}
+                  />
                   <Area
                     type="monotone"
-                    dataKey="Succesful Requests"
+                    dataKey="Successful Requests"
                     stackId="1"
-                    stroke="#FFE5E8"
-                    fill="#9C7DFF"
+                    stroke="#FF4D9E"
+                    fill="#49067C"
                   />
                 </AreaChart>
               </ResponsiveContainer>
@@ -144,28 +180,28 @@ export const ChartAnalytics = () => {
           <CardContent>
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={analytics.resourceTrend}>
-                  {/* Uncomment this after getting real data */}
-
-                  {/* <defs>
-                  <linearGradient id="colorSuccess" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#FFE5E8" stopOpacity={0.8}/>
-                    <stop offset="95%" stopColor="#9C7DFF" stopOpacity={0.2}/>
-                  </linearGradient>
-                </defs> */}
-
+                <LineChart data={analytics.resourceTrend}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="date" />
                   <YAxis />
-                  <Tooltip />
-                  <Area
-                    type="monotone"
-                    dataKey="Succesful Requests"
-                    stackId="1"
-                    stroke="#FFE5E8"
-                    fill="#9C7DFF"
+                  <Tooltip 
+                    content={<CustomTooltip />}
                   />
-                </AreaChart>
+                  <Line
+                    type="monotone"
+                    dataKey="CPU Cores Requested"
+                    stroke="#00F6FF"
+                    strokeWidth={2}
+                    dot={{ r: 4 }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="RAM (GB) Requested"
+                    stroke="#F4BE37"
+                    strokeWidth={2}
+                    dot={{ r: 4 }}
+                  />
+                </LineChart>
               </ResponsiveContainer>
             </div>
           </CardContent>
@@ -186,25 +222,26 @@ export const ChartAnalytics = () => {
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={analytics.costTrend}>
-                  {/* Uncomment this after getting real data */}
-
-                  {/* <defs>
-                  <linearGradient id="colorSuccess" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#FFE5E8" stopOpacity={0.8}/>
-                    <stop offset="95%" stopColor="#9C7DFF" stopOpacity={0.2}/>
-                  </linearGradient>
-                </defs> */}
-
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="date" />
                   <YAxis />
-                  <Tooltip />
+                  <Tooltip 
+                    content={<CostTooltip />}
+                    formatter={( value: number ) => [`₱${value.toFixed(2)}`, ""]}
+                  />
                   <Area
                     type="monotone"
-                    dataKey="Succesful Requests "
+                    dataKey="Period Cost"
                     stackId="1"
-                    stroke="#FFE5E8"
-                    fill="#9C7DFF"
+                    stroke="#F4BE37"
+                    fill="#FF4D9E"
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="Cumulative"
+                    stackId="1"
+                    stroke="#9C7DFF"
+                    fill="#49067C"
                   />
                 </AreaChart>
               </ResponsiveContainer>
@@ -228,27 +265,20 @@ export const ChartAnalytics = () => {
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={analytics.trendData}>
-                {/* Uncomment this after getting real data */}
-
-                {/* <defs>
-                  <linearGradient id="colorSuccess" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#FFE5E8" stopOpacity={0.8}/>
-                    <stop offset="95%" stopColor="#9C7DFF" stopOpacity={0.2}/>
-                  </linearGradient>
-                </defs> */}
-
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="date" />
                 <YAxis />
-                <Tooltip />
-                <Bar dataKey="jobs" fill="#5388D8" radius={[4, 4, 0, 0]} />
+                <Tooltip 
+                  content={<CustomTooltip />}
+                />
+                <Bar dataKey="jobs" fill="#3A86FFC5" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </CardContent>
       </Card>
 
-      {/* Job Request Trend */}
+      {/* Detailed Statistics */}
       <Card className="shadow border-0 bg-secondary backdrop-blur-sm">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-xl font-rubik">

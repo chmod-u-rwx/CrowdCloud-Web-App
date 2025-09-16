@@ -1,5 +1,7 @@
+import { useAnalyticsStore } from "@/stores/useAnalyticsStore";
 import { useJobsStore } from "@/stores/useJobsStore";
-import type { Job, TimePeriod } from "@/types";
+import { useRequestMetrics } from "@/hooks/useRequestMetrics";
+import type { Job, Requests, } from "@/types";
 import {
   getBasicJobStats,
   getDateRange,
@@ -10,12 +12,14 @@ import {
   eachDayOfInterval, 
   eachMonthOfInterval, 
   eachWeekOfInterval, 
+  endOfMonth, 
+  endOfWeek, 
   format, 
   startOfMonth, 
   startOfWeek, 
   subDays 
 } from "date-fns";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 
 interface UseAnalyticsProps {
@@ -23,19 +27,38 @@ interface UseAnalyticsProps {
 }
 
 // Running -> Completed -> Paused -> Failed
-const CHART_COLORS = ["#49067C", "#9C7DFF", "F4BE37", "FF4D9E"];
+const CHART_COLORS = ["#49067C", "#9C7DFF", "#F4BE37", "#FF4D9E"];
 
 export const useAnalytics = ({ jobs }: UseAnalyticsProps) => {
   const { jobId } = useParams();
+  const selectedPeriod = useAnalyticsStore((state) => state.selectedPeriod);
+  const costRates = useAnalyticsStore((state) => state.costRates);
+
+  const { start, end } = getDateRange(selectedPeriod);
+  
+  const { requests } = useRequestMetrics(
+    jobId
+      ? {
+          job_id: jobId,
+          start_time: start.toISOString(),
+          end_time: end.toISOString(),
+        }
+      : undefined
+  );
+  
   const storeJobs = useJobsStore((state) => state.jobs);
   const jobsToUse = jobs ?? storeJobs;
   const job = jobsToUse.find((j) => j.job_id === jobId);
 
-  const { cpuCost, ramCost, totalCost } = getResourceCost(
-    job?.resources ?? { cpu: 0, ram: 0 }
-  );
+  const rates = costRates ?? {
+    cpu_core_cost_per_second: 0.03,
+    ram_gb_cost_per_second: 0.05,
+  }
 
-  const [selectedPeriod, setSelectedPeriod] = useState<TimePeriod>("daily");
+  const { cpuCost, ramCost } = getResourceCost(
+    job?.resources ?? { cpu: 0, ram: 0 },
+    rates,
+  );
 
   const analytics = useMemo(() => {
     const now = new Date();
@@ -45,18 +68,16 @@ export const useAnalytics = ({ jobs }: UseAnalyticsProps) => {
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
     const last7Days = subDays(now, 7);
-    const last30Days = subDays(now, 30);
-
-    const { start: periodStart } = getDateRange(selectedPeriod);
+    const last30Days = subDays(now, daysInMonth);
 
     const jobsInPeriod = jobsToUse.filter(
-      (job) => job.created_at !== undefined && job.created_at >= periodStart
+      (job) => job.created_at !== undefined && new Date(job.created_at) >= start
     );
     const jobsLast7Days = jobsToUse.filter(
-      (job) => job.created_at !== undefined && job.created_at >= last7Days
+      (job) => job.created_at !== undefined && new Date(job.created_at) >= last7Days
     );
     const jobsLast30Days = jobsToUse.filter(
-      (job) => job.created_at !== undefined && job.created_at >= last30Days
+      (job) => job.created_at !== undefined && new Date(job.created_at) >= last30Days
     );
 
     // Job Stats
@@ -65,17 +86,33 @@ export const useAnalytics = ({ jobs }: UseAnalyticsProps) => {
     // Resource Requests
     const resourceRequests = getResourceRequests(jobsToUse);
 
-    // Traffic Metrics (Please take note that this only simulation)
-    const totalRequests = jobsToUse.length * Math.floor(Math.random() * 50 + 10); // 10-60 requests per job
-    const requestsLast7Days = jobsLast7Days.length * Math.floor(Math.random() * 30 + 5);
-    const requestsLast30Days = jobsLast30Days.length * Math.floor(Math.random() * 40 + 8);
-    const avgRequestsPerJob = totalRequests / Math.max(jobs.length, 1);
-    const peakRequestsPerHour = Math.floor(Math.random() * 200 + 50);
-    const requestSuccessRate = 85 + Math.random() * 12; // 85-97%
+    const totalRequests = requests.length;
+    const requestsLast7Days = requests.filter(
+      req => new Date(req.timestamp) >= last7Days
+    ).length;
+    const requestsLast30Days = requests.filter(
+      req => new Date(req.timestamp) >= last30Days
+    ).length;
+    const avgRequestsPerJob = jobs.length > 0 ? totalRequests / jobs.length : 0;
+    const peakRequestsPerHour = Math.max(
+      ...Object.values(
+        requests.reduce((acc, req) => {
+          const hour = new Date(req.timestamp).getHours();
+          acc[hour] = (acc[hour] || 0) + 1;
 
-    // Cost calculations (what borrower)
+          return acc;
+        }, {} as Record<number, number>)
+      )
+    );
+    const successfulRequests = requests.filter(req => req.status === "success").length;
+    const requestSuccessRate = totalRequests > 0 ? (successfulRequests / totalRequests) * 100 : 0;
+
+    // Cost calculations
     const cpuHourlyCost = cpuCost * 3600; // 3600 seconds in 1 hr
+    const cpuMonthlyCost = resourceRequests.activeCpuUsage * 24 * daysInMonth;
+
     const ramHourlyCost = ramCost * 3600;
+    const ramMonthlyCost = resourceRequests.activeRamUsage * 24 * daysInMonth;
     const currentHourlyCost =
       resourceRequests.activeCpuUsage +
       cpuHourlyCost +
@@ -92,65 +129,83 @@ export const useAnalytics = ({ jobs }: UseAnalyticsProps) => {
 
     const statusDistribution = [
       { name: "Running", value: basicJobStats.runningJobs, colors: CHART_COLORS[0] },
-      { name: "Completed", value: basicJobStats.runningJobs, colors: CHART_COLORS[1] },
-      { name: "Paused", value: basicJobStats.runningJobs, colors: CHART_COLORS[2] },
-      { name: "Failed", value: basicJobStats.runningJobs, colors: CHART_COLORS[3] },
+      { name: "Completed", value: basicJobStats.completedJobs, colors: CHART_COLORS[1] },
+      { name: "Paused", value: basicJobStats.pausedJobs, colors: CHART_COLORS[2] },
+      { name: "Failed", value: basicJobStats.failedJobs, colors: CHART_COLORS[3] },
     ].filter(item => item.value > 0);
 
     const generateTrendData = () => {
       let dateIntervals: Date[] = [];
       if (selectedPeriod === "daily") {
-        dateIntervals = eachDayOfInterval({ start: periodStart, end: now });
+        dateIntervals = eachDayOfInterval({ start, end: now });
       } else if (selectedPeriod === "weekly") {
-        dateIntervals = eachWeekOfInterval({ start: periodStart, end: now });
+        dateIntervals = eachWeekOfInterval({ start, end: now });
       } else {
-        dateIntervals = eachMonthOfInterval({ start: periodStart, end: now });
+        dateIntervals = eachMonthOfInterval({ start, end: now });
       }
 
       // const dateIntervals = intervals({ start: periodStart, end: now });
 
       return dateIntervals.map((date: Date) => {
         let formatString: string;
-        let filterJobs: Job[];
+        let periodRequests: Requests[];
 
         if(selectedPeriod === "daily") {
           formatString = "MMM dd";
-          filterJobs = jobs.filter(
-            job => job.created_at !== undefined && 
-            format(job.created_at, "yyyy-MM-dd") === format(date, "yyyy-MM-dd")
+          periodRequests = requests.filter(
+            req => format(new Date(req.timestamp), "yyyy-MM-dd") === format(date, "yyyy-MM-dd")
           );
         } else if(selectedPeriod === "weekly") {
           formatString = 'MMM dd';
           const weekStart = startOfWeek(date)
-          const weekEnd = subDays(weekStart, -6);
-          filterJobs = jobs.filter(
-            job => job.created_at !== undefined &&
-              job.created_at >= weekStart &&
-              job.created_at <= weekEnd
+          const weekEnd = endOfWeek(date);
+          periodRequests = requests.filter(
+            req => {
+              const ts = new Date(req.timestamp);
+              return ts >= weekStart && ts <= weekEnd;
+            }
           );
         } else {
           formatString = 'MMM yyyy';
           const monthStart = startOfMonth(date);
-          const monthEnd = subDays(monthStart, -daysInMonth);
-          filterJobs = jobs.filter(
-            job => job.created_at !== undefined &&
-              job.created_at >= monthStart &&
-              job.created_at <= monthEnd
+          const monthEnd = endOfMonth(date);
+          periodRequests = requests.filter(
+            req => {
+              const ts = new Date(req.timestamp);
+              return ts >= monthStart && ts <= monthEnd;
+            }
           );
         }
 
-        const periodRequests = filterJobs.length * Math.floor(Math.random() * 40 + 10);
+        const jobsInPeriod = jobsToUse.filter(
+          job => job.created_at !== undefined && (
+            selectedPeriod === "daily"
+            ? format(job.created_at, "yyyy-MM-dd") === format(date, "yyyy-MM-dd")
+            : selectedPeriod === "weekly"
+              ? new Date(job.created_at) >= startOfWeek(date) && new Date(job.created_at) <= endOfWeek(date)
+              : new Date(job.created_at) >= startOfMonth(date) && new Date(job.created_at) <= endOfMonth(date)
+          )
+        );
+
+        const completed = periodRequests.filter(req => req.status === "success").length;
+        const failed = periodRequests.filter(req => req.status === "failed").length;
+
+        const runningJobsInPeriod = jobsInPeriod.filter(job => job.status === "running");
 
         return {
           date: format(date, formatString),
-          jobs: filterJobs.length,
-          cpu: filterJobs.reduce((sum, job) => sum + job.resources.cpu, 0),
-          ram: filterJobs.reduce((sum, job) => sum + job.resources.ram, 0),
-          cost: filterJobs.reduce((sum) => sum + (totalCost * 3600), 0),
-          completed: filterJobs.filter(job => job.status === 'completed').length,
-          failed: filterJobs.filter(job => job.status === 'failed').length,
-          requests: periodRequests,
-          successfulRequests: Math.floor(periodRequests / (requestSuccessRate / 100)),
+          jobs: jobsInPeriod.length,
+          cpu: jobsInPeriod.reduce((sum, job) => sum + job.resources.cpu, 0),
+          ram: jobsInPeriod.reduce((sum, job) => sum + job.resources.ram, 0),
+
+          cost: runningJobsInPeriod.reduce((sum, job) => {
+            const { cpuCost, ramCost } = getResourceCost(job.resources, rates);
+            return sum + ((cpuCost + ramCost) * 3600);
+          }, 0),
+          completed,
+          failed,
+          requests: periodRequests.length,
+          successfulRequests: completed,
         };
       });
     };
@@ -190,6 +245,8 @@ export const useAnalytics = ({ jobs }: UseAnalyticsProps) => {
       basicJobStats,
       resourceRequests,
       currentHourlyCost,
+      cpuMonthlyCost,
+      ramMonthlyCost,
       estimatedMonthlyCost,
       jobsInPeriod: jobsInPeriod.length,
       jobsLast7Days: jobsLast7Days.length,
@@ -209,7 +266,10 @@ export const useAnalytics = ({ jobs }: UseAnalyticsProps) => {
       peakRequestsPerHour,
       requestSuccessRate,
     }
-  }, [jobsToUse, selectedPeriod]);
+  }, [jobsToUse, selectedPeriod, requests]);
 
-  return { analytics, selectedPeriod, setSelectedPeriod };
+  return { 
+    analytics,
+    selectedPeriod,
+  };
 };

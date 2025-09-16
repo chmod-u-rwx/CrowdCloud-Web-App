@@ -2,12 +2,11 @@ import { BarChart3, Filter } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import type { TimePeriod } from "@/types";
 import { Button } from "@/components/ui/button";
-import { useAnalytics } from "@/hooks/useAnalytics";
-import { useJobsStore } from "@/stores/useJobsStore";
+// import { useJobsStore } from "@/stores/useJobsStore";
+import { useAnalyticsStore } from "@/stores/useAnalyticsStore";
 
 export default function AnalyticsHeader() {
-  const jobs = useJobsStore((state) => state.jobs);
-  const { selectedPeriod, setSelectedPeriod } = useAnalytics({ jobs });
+  const { selectedPeriod, setSelectedPeriod } = useAnalyticsStore()
   return (
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div className="space-y-2">
