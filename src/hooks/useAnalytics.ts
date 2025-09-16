@@ -144,8 +144,6 @@ export const useAnalytics = ({ jobs }: UseAnalyticsProps) => {
         dateIntervals = eachMonthOfInterval({ start, end: now });
       }
 
-      // const dateIntervals = intervals({ start: periodStart, end: now });
-
       return dateIntervals.map((date: Date) => {
         let formatString: string;
         let periodRequests: Requests[];
