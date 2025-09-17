@@ -7,7 +7,8 @@ import { JobAnalytics } from "@/pages/JobAnalytics";
 import { JobDetail } from "@/pages/JobDetail";
 import { Signup } from "@/pages/Signup";
 import LandingPage from "@/pages/LandingPage";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "@/pages/Dashboard";
+import UserSettings from "@/pages/UserSettings";
 
 export const routes = [
   {
@@ -21,7 +22,8 @@ export const routes = [
     children: [
       { index: true, path: "/dashboard", element: <Dashboard /> },
       { path: "/dashboard/jobs", element: <JobPage /> },
-      { path: "/dashboard/analytics", element: <JobAnalytics /> }
+      { path: "/dashboard/analytics", element: <JobAnalytics /> },
+      { path: "/dashboard/user-settings", element: <UserSettings /> }
     ],
   },
   { path: "/dashboard/jobs/:jobId", element: <JobDetail /> },
