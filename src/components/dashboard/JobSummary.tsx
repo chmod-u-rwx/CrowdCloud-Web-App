@@ -11,7 +11,7 @@ import {
   CardTitle
 } from "@/components/ui/card";
 import { format } from "date-fns";
-import { Eye, Globe } from "lucide-react";
+import { Cpu, Eye, Globe } from "lucide-react";
 
 export default function JobSummary() {
   const navigate = useNavigate();
@@ -24,6 +24,26 @@ export default function JobSummary() {
   const rates = useAnalyticsStore((state) => state.costRates) ?? {
     cpu_core_cost_per_second: 0.03,
     ram_gb_cost_per_second: 0.05,
+  };
+
+  if (jobs.length === 0) {
+    return (
+      <Card className="shadow-lg border-0 bg-secondary backdrop-blur-sm mt-4">
+        <CardContent className="p-8 text-center">
+          <div className="space-y-4">
+            <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto">
+              <Cpu className="w-8 h-8 " />
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-2">No Jobs Yet</h3>
+              <p className="text-secondary-foreground">
+                Create your first compute job to get started with the CrowdCloud network.
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
   };
 
   return (

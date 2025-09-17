@@ -1,12 +1,12 @@
 import { useForm } from "react-hook-form";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { userSchema } from "@/schema/schemas";
-import { Button } from "../ui/button";
-import { Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { signupUser } from "@/services/api";
 import { useNavigate } from "react-router-dom";
+import { Loader2 } from "lucide-react";
 
 type IndividualSignupFormData = {
   username: string;

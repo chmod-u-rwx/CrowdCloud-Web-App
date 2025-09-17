@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
 import { Calendar, Cpu, MemoryStick, Settings } from "lucide-react";
+import { updateJob as updateJobApi } from "@/services/api";
 
 interface EditFormData {
   job_name: string;
@@ -64,11 +65,10 @@ export const JobDetailsOverview = () => {
   // Listen for save trigger from header
   useEffect(() => {
     if (requestSave) {
-      handleSubmit((data) => {
+      handleSubmit(async (data) => {
         if (!job) return;
 
-        updateJob({
-          ...job,
+        const updatedJob = await updateJobApi(job.job_id, {
           job_name: data.job_name,
           repo_url: data.repo_url,
           job_description: data.job_description,
@@ -77,6 +77,8 @@ export const JobDetailsOverview = () => {
             ram: data.ram,
           },
         });
+        updateJob(updatedJob);
+
         setIsEditing(false);
         setRequestSave(false);
       })();
