@@ -47,9 +47,6 @@ export const JobList = ({
   ) => {
     setLoadingJobs((prev) => new Set(prev).add(job_id));
 
-    // For Mock up logic: Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
     onUpdateStatus(job_id, newStatus);
     setLoadingJobs((prev) => {
       const newSet = new Set(prev);
@@ -206,8 +203,8 @@ export const JobList = ({
                 <span className="font-medium text-confirm">
                   ₱
                   {(
-                    job.resources.cpu * 0.08 +
-                    job.resources.ram * 0.09
+                    job.resources.cpu * 0.03 +
+                    job.resources.ram * 0.05
                   ).toFixed(2)}{" "}
                   /secs
                 </span>

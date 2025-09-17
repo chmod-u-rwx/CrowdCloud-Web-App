@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button";
 import { useAnalyticsStore } from "@/stores/useAnalyticsStore";
 
 export default function AnalyticsHeader() {
-  const { selectedPeriod, setSelectedPeriod } = useAnalyticsStore()
+  const { selectedPeriod, setSelectedPeriod } = useAnalyticsStore();
+  
   return (
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div className="space-y-2">

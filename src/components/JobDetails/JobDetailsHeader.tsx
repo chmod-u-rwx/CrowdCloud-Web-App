@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { getJobStatusColor } from "@/utils/utility";
@@ -7,7 +7,6 @@ import { ArrowLeft, Edit3, Save, X } from "lucide-react";
 
 export const JobDetailsHeader = () => {
   const { jobId } = useParams<{ jobId: string }>();
-  const navigate = useNavigate();
 
   const jobs = useJobsStore((state) => state.jobs);
   const job = jobs.find((j) => j.job_id === jobId);
@@ -48,7 +47,7 @@ export const JobDetailsHeader = () => {
         <div className="flex justify-between">
           <Button
             className="bg-gradient-to-r from-primary to-accent flex items-center gap-2"
-            onClick={() => navigate("/dashboard/jobs")}
+            onClick={() => window.history.back()}
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Dashboard
