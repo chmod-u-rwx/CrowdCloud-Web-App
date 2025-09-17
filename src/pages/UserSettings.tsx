@@ -1,5 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import UserHeader from "@/components/UserSetting/UserHeader";
+import UserProfile from "@/components/UserSetting/UserProfile";
 
 export default function UserSettings() {
   return (
@@ -21,7 +22,7 @@ export default function UserSettings() {
         </TabsList>
 
         <TabsContent value="profile" className="mt-2">
-          
+          <UserProfile />
         </TabsContent>
       </Tabs>
     </div>

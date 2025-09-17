@@ -21,7 +21,6 @@ export const jobCreateSchema = yup.object().shape({
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&._]{8,}$/;
 
 export const userSchema = yup.object().shape({
-  // userId: yup.string().optional(),
   username: yup.string().required("Username is required"),
   first_name: yup.string().required("First Name is required"),
   last_name: yup.string().required("Last Name is required"),
@@ -44,7 +43,6 @@ export const userSchema = yup.object().shape({
 });
 
 export const companyUserSchema = yup.object().shape({
-  // userId: yup.string().optional(), //Uncomment when User Model is finalize
   username: yup.string().required("Username is required"),
   first_name: yup.string().required("First Name is required"),
   last_name: yup.string().required("Last Name is required"),
@@ -71,4 +69,12 @@ export const companyUserSchema = yup.object().shape({
 export const loginSchema = yup.object().shape({
   email: yup.string().email("Enter a valid email address").required("Email is required"),
   password: yup.string().required("Password is required"),
+});
+
+export const profileUpdateSchema = yup.object().shape({
+  first_name: yup.string().required("First Name is required"),
+  last_name: yup.string().required("Last Name is required"),
+  username: yup.string().required("Username is required"),
+  company_name: yup.string().required("Company Name is required"),
+  company_address: yup.string().required("Company Address is required"),
 });

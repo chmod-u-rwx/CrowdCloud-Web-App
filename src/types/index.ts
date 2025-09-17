@@ -77,8 +77,8 @@ export interface UserAuth {
   phone_number: string;
   user_id: string;
   role: UserRole;
-  companyName?: string;
-  companyAddress?: string;
+  company_name?: string;
+  company_address?: string;
 }
 
 export interface LoginCredentials {
