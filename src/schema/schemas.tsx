@@ -78,3 +78,16 @@ export const profileUpdateSchema = yup.object().shape({
   company_name: yup.string().required("Company Name is required"),
   company_address: yup.string().required("Company Address is required"),
 });
+
+export const accountUpdateSchema = yup.object().shape({
+  email: yup
+  .string()
+  .email("Enter a valid email address")
+  .required("Email is required"),
+  password: yup.string().required("Password is Required"),
+  confirm_password: yup
+  .string()
+  .oneOf([yup.ref("password")], "Password must match")
+  .required(""),
+  new_password: yup.string().required(""),
+});
