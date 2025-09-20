@@ -26,7 +26,7 @@ export const Features = () => {
   return (
     <section
       id="features"
-      className="py-20 relative overflow-hidden bg-gradient-to-b from-slate-900 to to-black"
+      className="py-20 relative overflow-hidden"
     >
       {/* Background */}
       <div className="absolute inset-0">
@@ -63,7 +63,6 @@ export const Features = () => {
             <motion.div
               key={index}
               variants={itemVariants}
-              // whileHover={{ scale: 1.05, y: -5 }}
               className="group"
             >
               <Card className="h-full bg-secondary backdrop-blur-sm border border-border overflow-hidden">

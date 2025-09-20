@@ -6,7 +6,16 @@ import {
   startOfWeek,
   subDays,
 } from "date-fns";
-import { Brain, Coins, Cpu, Network, Shield, Zap } from "lucide-react";
+import { 
+  Brain,
+  Code,
+  Coins,
+  Cpu,
+  Laptop,
+  Network,
+  Server,Shield,
+  Zap
+} from "lucide-react";
 
 export function getJobStats(jobs: Job[]) {
   return {
@@ -124,47 +133,112 @@ export const getPeriodLabel = (period: TimePeriod) => {
   }
 };
 
+// --- Landing Page ---
+
 export const getFeatures = [
   {
     icon: Cpu,
     title: "Distributed Serverless Compute",
     description:
       "Execute sandboxed workloads across peer-contributed nodes with lightweight virtualization and automatic scaling.",
-    gradient: "from-blue-500 to-cyan-500",
+    gradient: "from-accent to-primary-three",
   },
   {
     icon: Brain,
     title: "AI-Powered Scheduling",
     description:
       "Intelligent job distribution based on real-time availability, workload characteristics, and predictive models.",
-    gradient: "from-purple-500 to-pink-500",
+    gradient: "from-accent to-primary-three",
   },
   {
     icon: Network,
     title: "Redundant Storage Layer",
     description:
       "Distributed object and blob storage with built-in replication and automatic failover mechanisms.",
-    gradient: "from-green-500 to-emerald-500",
+    gradient: "from-accent to-primary-three",
   },
   {
     icon: Shield,
     title: "Secure Sandboxing",
     description:
       "Military-grade isolation using Firecracker virtualization ensures complete security between workloads.",
-    gradient: "from-red-500 to-orange-500",
+    gradient: "from-accent to-primary-three",
   },
   {
     icon: Coins,
     title: "Transparent Incentives",
     description:
       "Fair compensation system with automated metering and token-based rewards for contributing nodes.",
-    gradient: "from-yellow-500 to-orange-500",
+    gradient: "from-accent to-primary-three",
   },
   {
     icon: Zap,
     title: "Warm Start Optimization",
     description:
       "Environment caching and intelligent pre-warming reduce cold-start latency for frequent workloads.",
-    gradient: "from-indigo-500 to-purple-500",
+    gradient: "from-accent to-primary-three",
+  },
+];
+
+export const getObjectives = [
+  "Design distributed system for secure, sandboxed serverless compute jobs",
+  "Create redundant storage system with built-in failover mechanisms",
+  "Develop AI-based scheduler for dynamic workload distribution",
+  "Implement transparent incentive model with automated compensation",
+  "Evaluate scalability, security, and efficiency with real-world benchmarks",
+];
+
+export const getScopeFeatures = [
+  "Peer-contributed compute infrastructure with sandboxed execution",
+  "Distributed blob and object storage with replication",
+  "AI-powered scheduler with predictive models",
+  "Environment caching and warm start optimization",
+  "Web-based developer interface for job submissions",
+  "Desktop contributor interface with resource limit controls",
+];
+
+export const getLimitations = [
+  "CPU-based workloads only (no GPU/TPU support in this phase)",
+  "Local credit system instead of public blockchain integration",
+  "Fixed-rate incentive system for prototype phase",
+  "Desktop and server-class contributors only (no mobile optimization)",
+];
+
+export const downloadOptions = [
+  {
+    icon: Laptop,
+    title: "Desktop Client",
+    description: "Contribute your computing resources and earn rewards",
+    features: [
+      "Resource sharing controls",
+      "Real-time earnings tracking",
+      "Automatic updates",
+    ],
+    buttonText: "Download Client",
+    gradient: "from-accent to-primary-three",
+  },
+  {
+    icon: Server,
+    title: "Server Package",
+    description: "Deploy CrowdCloud on your server infrastructure",
+    features: [
+      "Enterprise-grade deployment",
+      "Advanced monitoring",
+      "API access",
+    ],
+    buttonText: "Get Server Package",
+    gradient: "from-accent to-primary-three",
+  },
+  {
+    icon: Code,
+    title: "Developer SDK",
+    description: "Build applications on the CrowdCloud platform",
+    features: [
+      "Complete API documentation",
+      "Code examples",
+      "Community support",
+    ],
+    buttonText: "Access SDK",
+    gradient: "from-accent to-primary-three",
   },
 ];
