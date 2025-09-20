@@ -1,20 +1,44 @@
-import { AUTH_BUTTONS, NAV_ITEMS } from "@/types/navItem";
-import SideMenuLogo from "../utils/SideMenuLogo";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Button } from "../ui/button";
 import { useAuthStore } from "@/stores/useAuthStore";
-import { LogOut, User } from "lucide-react";
+import { AUTH_BUTTONS, NAV_ITEMS } from "@/types/navItem";
+import SideMenuLogo from "@/components/utils/SideMenuLogo";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+} from "@/components/ui/dropdown-menu";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage
+} from "@/components/ui/avatar";
+import { LogOut, User } from "lucide-react";
+import { motion } from "framer-motion";
 
 export const Navbar = () => {
+  const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+
+    if(element) {
+      element.scrollIntoView({ behavior: "smooth" })
+    }
+  };
 
   const handleLogout = () => {
     useAuthStore.getState().logout();
@@ -23,7 +47,13 @@ export const Navbar = () => {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b">
+    <header 
+      className={`sticky top-0 z-40 w-full border-b ${
+        isScrolled
+          ? "bg-secondary/80 backdrop-blur-md border-b border-secondary/10"
+          : "bg-transparent"
+      }`}
+    >
       <div className="container mx-auto flex h-20 items-center px-4">
         <div className="flex flex-1 items-center justify-between">
           <SideMenuLogo />
@@ -32,13 +62,15 @@ export const Navbar = () => {
           <nav className="hidden md:flex items-center lg:space-x-6 space-x-4">
             <div className="h-10 bg-gray-800 px-4 flex items-center rounded-3xl gap-4 space-x-4 mx-4">
               {NAV_ITEMS.map((item) => (
-                <Link
-                  key={item.href}
-                  to={item.href}
-                  className="text-sm font-semibold text-foreground hover:text-primary-two transition-colors"
+                <motion.button
+                  key={item.id}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="text-secondary-foreground hover:text-foreground transition-colors duration-200 font-semibold cursor-pointer"
+                  onClick={() => scrollToSection(item.id)}
                 >
                   {item.label}
-                </Link>
+                </motion.button>
               ))}
             </div>
           </nav>
