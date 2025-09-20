@@ -3,9 +3,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { appFeatures } from "@/utils/utility";
 import worker from "@/assets/worker.png";
-import { DownloadIcon } from "lucide-react";
+import { ArrowRight, DownloadIcon } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function Download() {
+  const navigate = useNavigate();
+
   return (
     <section id="download" className="py-20 relative overflow-hidden">
       {/* Background */}
@@ -37,7 +40,7 @@ export default function Download() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16"
         >
           {/* Left Column */}
           <div className="space-y-8">
@@ -132,15 +135,42 @@ export default function Download() {
                   </div>
                 </div>
 
-                <div className="p-6 space-y-6">
-                  <img src={worker} alt="" />
+                <div className="p-1 space-y-6">
+                  <img src={worker} alt="Desktop App Image" />
                 </div>
               </div>
+
+              {/* Glow Effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary-two rounded-xl blur-2xl -z-10"></div>
             </div>
-            {/* <div className="border-2 border-primary-two p-2">
-              <img src={worker} alt="" />
-            </div> */}
           </motion.div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="text-center mb-12"
+        >
+          <Card className="max-w-2xl mx-auto backdrop-blur-sm">
+            <CardContent className="p-8">
+              <h3 className="text-2xl font-bold mb-4">
+                Need Computing Resources?
+              </h3>
+              <p className="text-secondary-foreground mb-6">
+                If you're looking to borrow computing resources for your workloads,
+                use our web application to create and manage your jobs.
+              </p>
+              <Button
+                className="font-semibold px-8 py-4 rounded-full"
+                onClick={() => navigate("/signup")}
+              >
+                Start Borrowing
+                <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
+            </CardContent>
+          </Card>
         </motion.div>
 
         {/* Quick Links */}
