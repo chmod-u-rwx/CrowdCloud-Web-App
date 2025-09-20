@@ -17,7 +17,7 @@ const authStoreLogic = persist<AuthStateStore>(
   {
     name: "user-auth-storage"
   }
-)
+);
 
 export const useAuthStore = create<AuthStateStore>()(
   authStoreLogic

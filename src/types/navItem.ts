@@ -25,10 +25,10 @@ export const DASHBOARD_ITEM: DashboardItem[] = [
 ];
 
 export const NAV_ITEMS: NavItem[] = [
-  { label: "Home", href: "/" },
-  { label: "Features", href: "/feature" },
-  { label: "About Us", href: "/about-us" },
-  { label: "Download CrowdCloud", href: "/download" },
+  { id: "hero", label: "Home" },
+  { id: "features", label: "Features" },
+  { id: "about", label: "About Us"},
+  { id: "download", label: "Download CrowdCloud" },
 ]
 
 export const AUTH_BUTTONS: AuthButton[] = [

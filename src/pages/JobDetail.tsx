@@ -45,7 +45,7 @@ export const JobDetail = () => {
         </Card>
       </div>
     );
-  }
+  };
 
   return (
     <div className="min-h-screen bg-background p-6 flex flex-col">
