@@ -8,12 +8,12 @@ import {
 } from "date-fns";
 import { 
   Brain,
-  Code,
+  CheckCircle,
   Coins,
   Cpu,
-  Laptop,
+  Monitor,
   Network,
-  Server,Shield,
+  Shield,
   Zap
 } from "lucide-react";
 
@@ -204,41 +204,9 @@ export const getLimitations = [
   "Desktop and server-class contributors only (no mobile optimization)",
 ];
 
-export const downloadOptions = [
-  {
-    icon: Laptop,
-    title: "Desktop Client",
-    description: "Contribute your computing resources and earn rewards",
-    features: [
-      "Resource sharing controls",
-      "Real-time earnings tracking",
-      "Automatic updates",
-    ],
-    buttonText: "Download Client",
-    gradient: "from-accent to-primary-three",
-  },
-  {
-    icon: Server,
-    title: "Server Package",
-    description: "Deploy CrowdCloud on your server infrastructure",
-    features: [
-      "Enterprise-grade deployment",
-      "Advanced monitoring",
-      "API access",
-    ],
-    buttonText: "Get Server Package",
-    gradient: "from-accent to-primary-three",
-  },
-  {
-    icon: Code,
-    title: "Developer SDK",
-    description: "Build applications on the CrowdCloud platform",
-    features: [
-      "Complete API documentation",
-      "Code examples",
-      "Community support",
-    ],
-    buttonText: "Access SDK",
-    gradient: "from-accent to-primary-three",
-  },
+export const appFeatures = [
+  { icon: Shield, text: "Secure resource sharing with full control" },
+  { icon: Zap, text: "Real-time earnings tracking and analytics" },
+  { icon: Monitor, text: "Set custom resource limits and schedules" },
+  { icon: CheckCircle, text: "Automatic updates and maintenance" }
 ];
