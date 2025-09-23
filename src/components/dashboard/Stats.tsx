@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -15,8 +16,29 @@ import {
 } from "recharts";
 
 import { PhilippinePeso } from "lucide-react";
+import { useAnalytics } from "@/hooks/useAnalytics";
+import { useJobsStore } from "@/stores/useJobsStore";
+import { getTransactionSummary } from "@/services/api";
+
 
 export default function Stats() {
+  const jobs = useJobsStore((state) => state.jobs);
+  const userJobIds = jobs.map(job => job.job_id);
+  const { analytics } = useAnalytics({ jobs });
+  const [totalExpenses, setTotalExpenses] = useState(0);
+
+  useEffect(() => {
+    async function fetchExpenses() {
+      let sum = 0;
+      for (const job_id of userJobIds) {
+        const summary = await getTransactionSummary({ job_id });
+        sum += summary.total_expenses ?? 0;
+      }
+      setTotalExpenses(sum);
+    }
+    
+    if(userJobIds.length > 0) fetchExpenses();
+  }, [userJobIds]);
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
@@ -46,7 +68,9 @@ export default function Stats() {
         <CardContent>
           <div className="flex items-center justify-between">
             <div className="space-y-4">
-              <p className="text-3xl font-semibold">0</p>
+              <p className="text-3xl font-semibold">
+                ₱{totalExpenses.toFixed(2)}
+              </p>
               <p className="text-sm text-muted-foreground">Total Expenses</p>
               {/* {trend && trendValue && (
                 <div className="flex items-center gap-1">
@@ -81,14 +105,16 @@ export default function Stats() {
         <CardContent>
           <div className="h-48">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart>
+              <AreaChart data={analytics.trafficTrend}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="date" />
                 <YAxis />
-                <Tooltip content={<CustomTooltip />} />
+                <Tooltip 
+                  content={<CustomTooltip />} 
+                />
                 <Area
                   type="monotone"
-                  dataKey="Successful Requests"
+                  dataKey="Failed Requests"
                   stackId="1"
                   stroke="#FF4D9E"
                   fill="#49067C"
@@ -102,7 +128,9 @@ export default function Stats() {
               <div className="w-1.5 h-10 bg-primary-two"></div>
               <div className="flex flex-col">
                 <span className="font-semibold text-sm">Failure Rate (Count)</span>
-                <span className="text-primary-three font-bold">Test</span>
+                <span className="text-primary-three font-bold">
+                  {analytics.trendData.reduce((sum, d) => sum + d.failed, 0)}
+                </span>
               </div>
             </div>
           </div>
@@ -120,7 +148,7 @@ export default function Stats() {
         <CardContent>
           <div className="h-48">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart>
+              <AreaChart data={analytics.trafficTrend}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="date" />
                 <YAxis />
@@ -141,7 +169,9 @@ export default function Stats() {
               <div className="w-1.5 h-10 bg-destructive"></div>
               <div className="flex flex-col">
                 <span className="font-semibold text-sm">Number of Requests</span>
-                <span className="text-primary-three font-bold">Test</span>
+                <span className="text-primary-three font-bold">
+                  {analytics.trendData.reduce((sum, d) => sum + d.successfulRequests, 0)}
+                </span>
               </div>
             </div>
           </div>

@@ -17,7 +17,9 @@ export interface Job {
   job_description: string;
   resources: JobResources;
   status: JobStatus;
-  created_at?: Date;
+  started_at?: string,
+  ended_at?: string;
+  created_at?: string;
   updated_at?: string;
 };
 
@@ -133,6 +135,22 @@ export interface Requests {
   timestamp: string;
   execution_time: string;
   transaction_id: string;
+}
+
+//  --- Transaction Shape ---
+export type TransactionStatus = "pending" | "paid" | "failed";
+
+export interface Transaction {
+  transaction_id: string;
+  request_id: string;
+  job_id: string;
+  worker_id: string;
+  timestamp: string;
+  cost_ram: number;
+  cost_cpu: number;
+  execution_time: string;
+  total_cost: number;
+  status: TransactionStatus;
 }
 
 // --- Utils ---

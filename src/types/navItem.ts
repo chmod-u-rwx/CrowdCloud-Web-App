@@ -1,12 +1,12 @@
 import type { AuthButton, DashboardItem, NavItem } from "@/types";
-import { BriefcaseBusiness, ChartLine, Home, LayoutDashboard } from "lucide-react";
+import { BriefcaseBusiness, ChartLine, LayoutDashboard } from "lucide-react";
 
 export const DASHBOARD_ITEM: DashboardItem[] = [
-  {
-    title: "Home",
-    href: "/",
-    icon: Home,
-  },
+  // {
+  //   title: "Home",
+  //   href: "/",
+  //   icon: Home,
+  // },
   {
     title: "Dashboard",
     href: "/dashboard",
@@ -28,7 +28,7 @@ export const NAV_ITEMS: NavItem[] = [
   { id: "hero", label: "Home" },
   { id: "features", label: "Features" },
   { id: "about", label: "About Us"},
-  { id: "download", label: "Download CrowdCloud" },
+  { id: "download", label: "Download" },
 ]
 
 export const AUTH_BUTTONS: AuthButton[] = [

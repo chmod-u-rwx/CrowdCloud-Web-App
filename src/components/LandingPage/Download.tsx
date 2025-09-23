@@ -136,7 +136,12 @@ export default function Download() {
                 </div>
 
                 <div className="p-1 space-y-6">
-                  <img src={worker} alt="Desktop App Image" />
+                  <img 
+                    loading="lazy"
+                    src={worker} 
+                    alt="Desktop App Image" 
+                    className="mx-auto rounded-b-xl"
+                  />
                 </div>
               </div>
 
