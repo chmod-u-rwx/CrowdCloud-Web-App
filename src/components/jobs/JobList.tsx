@@ -213,7 +213,7 @@ export const JobList = ({
 
             {/* Actions */}
             <div className="flex items-center justify-between pt-4 border-t my-4">
-              <div className="flex items gap-2 flex-col">
+              <div className="flex gap-2 flex-col">
                 <p className="text-secondary-foreground">Job ID: {job.job_id}</p>
                 <span
                   className="flex items-center text-secondary-foreground hover:text-primary-two"

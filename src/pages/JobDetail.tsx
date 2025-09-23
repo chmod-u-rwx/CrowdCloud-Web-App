@@ -6,12 +6,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { JobDetailsOverview } from "@/components/JobDetails/JobDetailsOverview";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { JobDetailsOverviewStats } from "@/components/JobDetails/JobDetailsOverviewStats";
 import JobTraffic from "@/components/JobDetails/JobTraffic";
 import JobErrors from "@/components/JobDetails/JobErrors";
 import GlowBackground from "@/components/utils/GlowBackground";
 import JobRequests from "@/components/JobDetails/JobRequests";
-
-import { JobDetailsOverviewStats } from "@/components/JobDetails/JobDetailsOverviewStats";
 import { 
   AlertTriangle,
   ArrowLeft,

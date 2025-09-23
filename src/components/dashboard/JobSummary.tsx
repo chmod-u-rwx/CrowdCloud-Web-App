@@ -18,7 +18,9 @@ export default function JobSummary() {
 
   const jobs = useJobsStore((state) => state.jobs);
   const filteredJobs = jobs.filter(
-    (j) => j.status === "paused" || j.status === "completed"
+    (j) => j.status === "paused" 
+      || j.status === "completed" 
+      || j.status === "running"
   );
 
   const rates = useAnalyticsStore((state) => state.costRates) ?? {

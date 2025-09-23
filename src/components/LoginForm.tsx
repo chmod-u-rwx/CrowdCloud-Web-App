@@ -35,11 +35,15 @@ export const LoginForm = () => {
       const authResponse = await loginUser(data);
       useAuthStore.getState().setUser(authResponse);
       reset();
-      navigate("/", { replace: true });
+      navigate("/dashboard", { replace: true });
       setLoginError(null);
       window.location.reload();
-    } catch (error) {
-      setLoginError("Invalid email or password.");
+    } catch (error: any) {
+      if(error?.response?.status === 500 || error?.status === 500) {
+        setLoginError("Internal Server Error. Please try again later.");
+      } else {
+        setLoginError("Invalid email or password.");
+      }
     }
   };
 
