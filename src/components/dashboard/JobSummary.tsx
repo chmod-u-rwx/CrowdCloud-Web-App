@@ -93,7 +93,7 @@ export default function JobSummary() {
                 <span className="font-semibold text-md">
                   ₱
                   {job.resources
-                    ? getResourceCost(job.resources, rates).totalCost
+                    ? getResourceCost(job.resources, rates).totalCost.toFixed(2)
                     : 0}{" "}
                   /secs
                 </span>
