@@ -1,3 +1,7 @@
+import useMockLogs from "@/mock/mock-logs";
+import { useJobsStore } from "@/stores/useJobsStore";
+import { format } from "date-fns";
+import { useParams } from "react-router-dom";
 import {
   Card,
   CardContent,
@@ -5,12 +9,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import useMockLogs from "@/mock/mock-logs";
-import { useJobsStore } from "@/stores/useJobsStore";
-import { format } from "date-fns";
+import { Badge } from "@/components/ui/badge";
 import { AlertTriangle, Bug, CheckCircle } from "lucide-react";
-import { useParams } from "react-router-dom";
-import { Badge } from "../ui/badge";
 
 export default function JobErrors() {
   const { jobId } = useParams();

@@ -108,8 +108,8 @@ export interface JobRequestPayload {
   worker_id: string;
   method?: MethodEnum;
   path: string;
-  headers: Record<string, any>;
-  params: Record<string, any>;
+  headers?: Record<string, any>;
+  params?: Record<string, any>;
   body?: any;
 }
 
