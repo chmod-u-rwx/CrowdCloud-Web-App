@@ -1,4 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { BillingSetting } from "@/components/UserSetting/BillingSetting";
 import AccountProfile from "@/components/UserSetting/AccountProfile";
 import UserHeader from "@/components/UserSetting/UserHeader";
 import UserProfile from "@/components/UserSetting/UserProfile";
@@ -28,6 +29,10 @@ export default function UserSettings() {
 
         <TabsContent value="account" className="mt-2">
           <AccountProfile />
+        </TabsContent>
+
+        <TabsContent value="billing" className="mt-2">
+          <BillingSetting />
         </TabsContent>
       </Tabs>
     </div>
