@@ -1,4 +1,3 @@
-// import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -6,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { AccountForm } from "./AccountForm";
+import { AccountForm } from "@/components/UserSetting/AccountForm";
 
 export default function AccountProfile() {
   return (
