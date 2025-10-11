@@ -6,12 +6,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { JobDetailsOverview } from "@/components/JobDetails/JobDetailsOverview";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { JobDetailsOverviewStats } from "@/components/JobDetails/JobDetailsOverviewStats";
 import JobTraffic from "@/components/JobDetails/JobTraffic";
 import JobErrors from "@/components/JobDetails/JobErrors";
 import GlowBackground from "@/components/utils/GlowBackground";
 import JobRequests from "@/components/JobDetails/JobRequests";
-
-import { JobDetailsOverviewStats } from "@/components/JobDetails/JobDetailsOverviewStats";
 import { 
   AlertTriangle,
   ArrowLeft,
@@ -25,7 +24,7 @@ export const JobDetail = () => {
   const { jobId } = useParams();
   const navigate = useNavigate();
   const jobs = useJobsStore((state) => state.jobs);
-  const job = jobs.find((j) => j.jobId === jobId);
+  const job = jobs.find((j) => j.job_id === jobId);
 
   const [activeTab, setActiveTab] = useState("overview");
 
@@ -45,7 +44,7 @@ export const JobDetail = () => {
         </Card>
       </div>
     );
-  }
+  };
 
   return (
     <div className="min-h-screen bg-background p-6 flex flex-col">

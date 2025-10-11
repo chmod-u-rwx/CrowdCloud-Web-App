@@ -9,4 +9,4 @@ export default function GlowBackground() {
       <div className="absolute bottom-20 right-20 w-[350px] h-[350px] bg-primary-two rounded-full blur-[200px]"></div>
     </div>
   );
-}
+};

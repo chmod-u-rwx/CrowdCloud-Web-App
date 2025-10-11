@@ -1,7 +1,21 @@
-import { JobMainContent } from "@/components/jobs/JobMainContent"
-import { JobStats } from "@/components/jobs/JobStats"
+import { JobMainContent } from "@/components/jobs/JobMainContent";
+import { JobStats } from "@/components/jobs/JobStats";
+import { useAuthStore } from "@/stores/useAuthStore";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function JobPage() {
+  const navigate = useNavigate();
+  const user = useAuthStore((state) => state.user);
+
+  useEffect(() => {
+    if(!user) {
+      navigate("/login", { replace: true })
+    }
+  }, [user, navigate])
+
+  if(!user) return null;
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -16,5 +30,5 @@ export default function JobPage() {
       <JobStats />
       <JobMainContent />
     </div>
-  )
-}
+  );
+};

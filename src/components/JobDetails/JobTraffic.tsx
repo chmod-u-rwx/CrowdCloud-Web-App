@@ -1,5 +1,9 @@
 import { useParams } from "react-router-dom";
-import { useJobsStore } from "@/stores/useJobsStore";
+import { useRequestMetrics } from "@/hooks/useRequestMetrics";
+import {
+  getHourlyRequestVolume,
+  getHourlyResponseTime
+} from "@/utils/jobTrafficAnalytics";
 import { 
   Card,
   CardContent,
@@ -18,15 +22,30 @@ import {
   XAxis,
   YAxis
 } from "recharts";
-import useMockLogs from "@/mock/mock-logs";
 import { BarChart3 } from "lucide-react";
 
 export default function JobTraffic() {
   const { jobId } = useParams();
-  const jobs = useJobsStore((state) => state.jobs);
-  const job = jobs.find((j) => j.jobId === jobId);
+  const { requests } = useRequestMetrics({ job_id: jobId });
 
-  const { mockTrafficData } = useMockLogs(job);
+  const hourlyData = getHourlyRequestVolume(requests);
+  const responseTimeData = getHourlyResponseTime(requests);
+
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-primary/30 p-2 rounded shadow text-md">
+          <div><strong>Time:</strong> {label}</div>
+          {payload.map((entry: any, idx: number) => (
+            <div key={idx}>
+              <strong>{entry.name}:</strong> {entry.value}
+            </div>
+          ))}
+        </div>
+      );
+    }
+    return null
+  };
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4">
@@ -41,11 +60,13 @@ export default function JobTraffic() {
         <CardContent>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={mockTrafficData}>
+              <AreaChart data={hourlyData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="time" />
                 <YAxis />
-                <Tooltip />
+                <Tooltip 
+                  content={<CustomTooltip />}
+                />
                 <Area 
                   type="monotone"
                   dataKey="successfulRequest"
@@ -79,7 +100,7 @@ export default function JobTraffic() {
         <CardContent>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={mockTrafficData}>
+              <LineChart data={responseTimeData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="time" />
                 <YAxis />
