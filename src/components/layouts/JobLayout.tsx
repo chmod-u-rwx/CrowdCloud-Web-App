@@ -1,4 +1,4 @@
-import DashboardNav from "@/components/dashboard/DashboardNav";
+import DashboardNav from "@/features/borrower-dashboard/components/DashboardNav";
 import { Outlet } from "react-router-dom";
 import GlowBackground from "../utils/GlowBackground";
 

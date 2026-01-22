@@ -1,5 +1,6 @@
-import MainLayout from "@/components/layout/MainLayout";
-import JobLayout from "@/components/layout/JobLayout";
+import MainLayout from "@/components/layouts/MainLayout";
+import JobLayout from "@/components/layouts/JobLayout";
+import Dashboard from "@/components/layouts/dashboard-layout";
 import NotFound from "@/pages/NotFound";
 import JobPage from "@/pages/JobPage";
 import Login from "@/pages/Login";
@@ -7,7 +8,6 @@ import { JobAnalytics } from "@/pages/JobAnalytics";
 import { JobDetail } from "@/pages/JobDetail";
 import { Signup } from "@/pages/Signup";
 import LandingPage from "@/pages/LandingPage";
-import Dashboard from "@/pages/Dashboard";
 import UserSettings from "@/pages/UserSettings";
 
 export const routes = [
