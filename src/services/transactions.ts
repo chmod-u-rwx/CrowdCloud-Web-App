@@ -1,5 +1,14 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createTransaction, getTransaction, getTransactionHistory, getTransactionSummary } from "@/services/api";
+import { 
+  useMutation,
+  useQuery,
+  useQueryClient
+} from "@tanstack/react-query";
+import { 
+  createTransaction,
+  getTransaction,
+  getTransactionHistory,
+  getTransactionSummary
+} from "@/features/borrower-dashboard/api/job-transaction";
 
 // Create Transactions (Mutation)
 export function useCreateTransactions() {

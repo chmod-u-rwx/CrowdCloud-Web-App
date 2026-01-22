@@ -1,7 +1,7 @@
-import AnalyticsHeader from "@/components/analytics/AnalyticsHeader"
-import { ChartAnalytics } from "@/components/analytics/ChartAnalytics";
-import { KeyMetrics } from "@/components/analytics/KeyMetrics";
-import { TrafficMetrics } from "@/components/analytics/TrafficMetrics";
+import AnalyticsHeader from "@/features/job-analytics/components/AnalyticsHeader"
+import { ChartAnalytics } from "@/features/job-analytics/components/ChartAnalytics";
+import { KeyMetrics } from "@/features/job-analytics/components/KeyMetrics";
+import { TrafficMetrics } from "@/features/job-analytics/components/TrafficMetrics";
 
 export const JobAnalytics = () => {
   return (
