@@ -1,5 +1,5 @@
 import GlowBackground from "@/components/utils/GlowBackground";
-import { Navbar } from "@/components/layout/Navbar";
+import { Navbar } from "@/components/layouts/Navbar";
 import { Outlet } from "react-router-dom";
 
 export default function MainLayout() {
