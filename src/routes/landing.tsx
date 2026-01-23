@@ -4,7 +4,7 @@ import { Features } from "@/components/LandingPage/Features";
 import { Hero } from "@/components/LandingPage/Hero";
 import Footer from "@/components/layouts/Footer";
 
-export default function LandingPage() {
+const LandingPage = () => {
   return (
     <>
       <Hero />
@@ -15,3 +15,5 @@ export default function LandingPage() {
     </>
   )
 }
+
+export default LandingPage;
