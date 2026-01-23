@@ -66,7 +66,7 @@ export default function Download() {
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   className="flex items-center space-x-4 p-4 rounded-lg bg-secondary backdrop-blur-sm border border-border"
                 >
-                  <div className="w-10 h-10 p-2.5 flex-shrink-0">
+                  <div className="w-10 h-10 p-2.5 shrink-0">
                     <feature.icon className="w-5 h-5" />
                   </div>
                   <span className="text-secondary-foreground font-medium">
@@ -123,7 +123,7 @@ export default function Download() {
             className="relative"
           >
             <div className="relative">
-              <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl border border-border shadow-2xl overflow-hidden">
+              <div className="bg-linear-to-br from-slate-800 to-slate-900 rounded-2xl border border-border shadow-2xl overflow-hidden">
                 <div className="bg-slate-700 px-4 py-3 flex items-center space-x-2 border-b border-border/80">
                   <div className="flex space-x-2">
                     <div className="w-3 h-3 rounded-full bg-destructive" />
@@ -146,7 +146,7 @@ export default function Download() {
               </div>
 
               {/* Glow Effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary-two rounded-xl blur-2xl -z-10"></div>
+              <div className="absolute inset-0 bg-linear-to-r from-primary to-primary-two rounded-xl blur-2xl -z-10"></div>
             </div>
           </motion.div>
         </motion.div>

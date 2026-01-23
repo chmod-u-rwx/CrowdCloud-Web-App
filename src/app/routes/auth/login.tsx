@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import AuthLogo from "@/components/utils/AuthLogo";
 import GlowBackground from "@/components/utils/GlowBackground";
-import { LoginForm } from "@/components/LoginForm";
+import { LoginForm } from "@/features/auth/components/LoginForm";
 
 export default function Login() {
   return (
