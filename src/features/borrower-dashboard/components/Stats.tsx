@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import { useAnalytics } from "@/hooks/useAnalytics";
+import { useJobsStore } from "@/stores/useJobsStore";
+import { getTransactionSummary } from "@/features/borrower-dashboard/api/job-transaction";
 import {
   Card,
   CardContent,
@@ -14,12 +17,7 @@ import {
   XAxis, 
   YAxis
 } from "recharts";
-
 import { PhilippinePeso } from "lucide-react";
-import { useAnalytics } from "@/hooks/useAnalytics";
-import { useJobsStore } from "@/stores/useJobsStore";
-import { getTransactionSummary } from "@/services/api";
-
 
 export default function Stats() {
   const jobs = useJobsStore((state) => state.jobs);

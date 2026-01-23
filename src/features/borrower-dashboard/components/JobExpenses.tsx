@@ -143,7 +143,7 @@ export default function JobExpenses() {
           </CardHeader>
 
           <CardContent>
-            <div className="space-y-4 overflow-y-auto max-h-[280px] no-scrollwidth">
+            <div className="space-y-4 overflow-y-auto max-h-70 no-scrollwidth">
               <div className="flex items-center justify-between border-b border-primary-two space-y-2 pb-4 ">
                 <div className="flex flex-col">
                   <span className="text-lg font-semibold">Payment Sent</span>
@@ -170,7 +170,7 @@ export default function JobExpenses() {
                   <YAxis />
                   <Tooltip
                     content={<CostTooltip />}
-                    formatter={(value: number) => [`₱${value.toFixed(2)}`, ""]}
+                    formatter={(value?: number) => [`₱${value?.toFixed(2)}`, ""]}
                   />
                   <Area
                     type="monotone"
