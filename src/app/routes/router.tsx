@@ -5,14 +5,14 @@ import { RouterProvider } from "react-router/dom";
 import { paths } from "@/config/paths";
 import { JobAnalytics } from "@/pages/JobAnalytics";
 import { JobDetail } from "@/pages/JobDetail";
-import { Signup } from "@/pages/Signup";
+import { Signup } from "@/app/routes/auth/signup";
 import MainLayout from "@/components/layouts/MainLayout";
 import JobLayout from "@/components/layouts/JobLayout";
 import Dashboard from "@/components/layouts/dashboard-layout";
-import NotFound from "@/routes/not-found";
+import NotFound from "@/app/routes/not-found";
 import JobPage from "@/pages/JobPage";
-import Login from "@/pages/Login";
-import LandingPage from "@/routes/landing";
+import Login from "@/app/routes/auth/login";
+import LandingPage from "@/app/routes/landing";
 import UserSettings from "@/pages/UserSettings";
 
 const convert = (queryClient: QueryClient) => (m: any) => {
@@ -25,12 +25,24 @@ const convert = (queryClient: QueryClient) => (m: any) => {
   };
 };
 
-export const createRouter = (queryClient: QueryClient) => 
+export const createCrowdCloudRouter = (queryClient: QueryClient) => 
   createBrowserRouter([
     {
       path: paths.home.path,
-      lazy: () => import("@/routes/landing").then(convert(queryClient)),
-    }
+      lazy: () => import("@/app/routes/landing").then(convert(queryClient)),
+    },
+    {
+      path: paths.auth.signup.path,
+      lazy: () => import("@/app/routes/auth/signup").then(convert(queryClient)),
+    },
+    {
+      path: paths.auth.login.path,
+      lazy: () => import("@/app/routes/auth/login").then(convert(queryClient)),
+    },
+    {
+      path: '*',
+      lazy: () => import('@/app/routes/not-found').then(convert(queryClient)),
+    },
   ]);
 
 export const routes = [
@@ -57,8 +69,7 @@ export const routes = [
 
 export const AppRouter = () => {
   const queryClient = useQueryClient();
-
-  const router = useMemo(() => createRouter(queryClient), [queryClient]);
+  const router = useMemo(() => createCrowdCloudRouter(queryClient), [queryClient]);
 
   return <RouterProvider router={router} />;
 };

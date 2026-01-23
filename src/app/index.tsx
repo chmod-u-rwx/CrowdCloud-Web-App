@@ -1,7 +1,7 @@
-import { AppRouter } from "@/routes/router";
+import { AppRouter } from "@/app/routes/router";
 import { Toaster } from "sonner";
 import { useJobs } from "@/hooks/useJobs";
-import { AppProvider } from "@/provider";
+import { AppProvider } from "@/app/provider";
 
 function App() {
   useJobs();
