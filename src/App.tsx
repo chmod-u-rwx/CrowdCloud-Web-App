@@ -1,19 +1,15 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { routes } from "@/routes";
-import { queryClient } from "./lib/queryClient";
+import { AppRouter } from "@/routes/router";
 import { Toaster } from "sonner";
-import { useJobs } from "./hooks/useJobs";
-
-const router = createBrowserRouter(routes)
+import { useJobs } from "@/hooks/useJobs";
+import { AppProvider } from "@/provider";
 
 function App() {
-  useJobs(); //For mock data, removed after
+  useJobs();
   return (
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+    <AppProvider>
       <Toaster />
-    </QueryClientProvider>
+      <AppRouter />
+    </AppProvider>
   );
 }
 
