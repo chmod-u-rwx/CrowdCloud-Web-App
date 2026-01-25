@@ -16,10 +16,10 @@ import {
 } from "@/components/ui/tabs";
 import AuthLogo from "@/components/utils/AuthLogo";
 import GlowBackground from "@/components/utils/GlowBackground";
-import { IndividualSignupForm } from "@/components/SignUpPage/IndividualSignupForm";
-import { CompanySignupForm } from "@/components/SignUpPage/CompanySignupForm";
+import { IndividualSignupForm } from "@/features/auth/components/IndividualSignupForm";
+import { CompanySignupForm } from "@/features/auth/components/CompanySignupForm";
 
-export const Signup = () => {
+const Signup = () => {
   const [activeTab, setActiveTab] = useState("individual");
 
   return (
@@ -84,3 +84,5 @@ export const Signup = () => {
     </div>
   );
 };
+
+export default Signup;

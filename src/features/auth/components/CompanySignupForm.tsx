@@ -1,25 +1,27 @@
+import { yupResolver } from "@hookform/resolvers/yup";
+import { companyUserSchema } from "@/schema/schemas";
 import { useForm } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { userSchema } from "@/schema/schemas";
 import { Button } from "@/components/ui/button";
-import { signupUser } from "@/services/api";
-import { useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
+import { signupUser } from "@/lib/auth";
+import { useNavigate } from "react-router-dom";
 
-type IndividualSignupFormData = {
+type CompanySignupFormData = {
   username: string;
   first_name: string;
   last_name: string;
   email: string;
+  company_name: string;
+  company_address: string;
   phone_number: string;
   password: string;
   confirm_password: string;
-  role: "individual";
+  role: "company";
 };
 
-export const IndividualSignupForm = () => {
+export const CompanySignupForm = () => {
   const navigate = useNavigate();
 
   const {
@@ -27,28 +29,31 @@ export const IndividualSignupForm = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<IndividualSignupFormData>({
-    resolver: yupResolver(userSchema),
+  } = useForm<CompanySignupFormData>({
+    resolver: yupResolver(companyUserSchema),
     defaultValues: {
       username: "",
       first_name: "",
       last_name: "",
       email: "",
+      company_name: "",
+      company_address: "",
       phone_number: "",
       password: "",
       confirm_password: "",
-      role: "individual",
+      role: "company",
     },
   });
 
-  const onSubmit = async (data: IndividualSignupFormData) => {
+  const onSubmit = async (data: CompanySignupFormData) => {
     try {
       await signupUser(data);
+      console.log("Sign up data:", data);
       reset();
       navigate("/login", { replace: true })
       window.location.reload();
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
   };
 
@@ -133,24 +138,62 @@ export const IndividualSignupForm = () => {
             </span>
           )}
         </div>
+        <div className="space-y-2">
+          <Label htmlFor="email">
+            Company Email Address <span className="text-destructive">*</span>
+          </Label>
+          <Input
+            type="email"
+            id="email"
+            {...register("email")}
+            placeholder="example@email.com"
+            className={`bg-input border-2 ${
+              errors.email ? "border-destructive" : ""
+            }`}
+            required
+          />
+          {errors.email && (
+            <span className="text-sm text-destructive">
+              {errors.email.message}
+            </span>
+          )}
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="company_name">
+            Company Name <span className="text-destructive">*</span>
+          </Label>
+          <Input
+            id="company_name"
+            {...register("company_name")}
+            placeholder="Computer Solution Inc."
+            className={`bg-input border-2 ${
+              errors.company_name ? "border-destructive" : ""
+            }`}
+            required
+          />
+          {errors.company_name && (
+            <span className="text-sm text-destructive">
+              {errors.company_name.message}
+            </span>
+          )}
+        </div>
       </div>
       <div className="space-y-2">
-        <Label htmlFor="email">
-          Email Address <span className="text-destructive">*</span>
+        <Label htmlFor="company_address">
+          Company Address <span className="text-destructive">*</span>
         </Label>
         <Input
-          type="email"
-          id="email"
-          {...register("email")}
-          placeholder="example@email.com"
+          id="company_address"
+          {...register("company_address")}
+          placeholder="Enter your company address"
           className={`bg-input border-2 ${
-            errors.email ? "border-destructive" : ""
+            errors.company_address ? "border-destructive" : ""
           }`}
           required
         />
-        {errors.email && (
+        {errors.company_address && (
           <span className="text-sm text-destructive">
-            {errors.email.message}
+            {errors.company_address.message}
           </span>
         )}
       </div>

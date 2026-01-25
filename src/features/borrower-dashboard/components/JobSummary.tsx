@@ -49,7 +49,7 @@ export default function JobSummary() {
   };
 
   return (
-    <div className="space-y-6 max-h-[300px] md:max-h-[580px] overflow-auto no-scrollwidth">
+    <div className="space-y-6 max-h-75 md:max-h-145 overflow-auto no-scrollwidth">
       {filteredJobs.map((job) => (
         <Card
           className="shadow border-0 bg-secondary backdrop-blur-sm"

@@ -119,7 +119,7 @@ export const Hero = () => {
                 whileHover={{ scale: 1.05 }}
                 className="text-center p-4 rounded-xl backdrop-blur-sm bg-primary/10 border border-primary-two/50"
               >
-                <div className="bg-gradient-to-r from-primary-two to-primary-three text-2xl md:text-3xl font-bold bg-clip-text text-transparent">
+                <div className="bg-linear-to-r from-primary-two to-primary-three text-2xl md:text-3xl font-bold bg-clip-text text-transparent">
                   {stat.number}
                 </div>
                 <div className="text-secondary-foreground text-md mt-1">

@@ -100,7 +100,7 @@ export default function About() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="flex items-start space-x-3 p-4 rounded-lg bg-secondary backdrop-blur-sm border border-border"
               >
-                <CheckCircle className="w-6 h-6 text-confirm mt-1 flex-shrink-0" />
+                <CheckCircle className="w-6 h-6 text-confirm mt-1 shrink-0" />
                 <p className="text-secondary-foreground">{objective}</p>
               </motion.div>
             ))}
@@ -131,7 +131,7 @@ export default function About() {
                       transition={{ duration: 0.4, delay: index * 0.1 }}
                       className="flex items-start space-x-3"
                     >
-                      <CheckCircle className="w-5 h-5 text-confirm mt-1 flex-shrink-0" />
+                      <CheckCircle className="w-5 h-5 text-confirm mt-1 shrink-0" />
                       <p className="text-secondary-foreground">{feature}</p>
                     </motion.div>
                   ))}
@@ -163,7 +163,7 @@ export default function About() {
                       transition={{ duration: 0.4, delay: index * 0.1 }}
                       className="flex items-start space-x-3"
                     >
-                      <XCircle className="w-5 h-5 text-destructive mt-1 flex-shrink-0" />
+                      <XCircle className="w-5 h-5 text-destructive mt-1 shrink-0" />
                       <p className="text-secondary-foreground">{limit}</p>
                     </motion.div>
                   ))}
