@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Card, CardContent } from "../ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { getFeatures } from "@/utils/utility";
 
 export const Features = () => {
@@ -72,7 +72,7 @@ export const Features = () => {
                       <feature.icon className="w-8 h-8" />
                     </div>
                     <div className={`
-                        absolute inset-0 w-16 h-16 rounded-2xl bg-gradient-to-r ${feature.gradient} opacity-20 blur-xl group-hover:opacity-40 transition-opacity duration-300 
+                        absolute inset-0 w-16 h-16 rounded-2xl bg-linear-to-r ${feature.gradient} opacity-20 blur-xl group-hover:opacity-40 transition-opacity duration-300 
                       `} 
                     />
                   </div>

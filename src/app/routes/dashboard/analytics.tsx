@@ -3,7 +3,7 @@ import { ChartAnalytics } from "@/features/job-analytics/components/ChartAnalyti
 import { KeyMetrics } from "@/features/job-analytics/components/KeyMetrics";
 import { TrafficMetrics } from "@/features/job-analytics/components/TrafficMetrics";
 
-export const JobAnalytics = () => {
+const JobAnalytics = () => {
   return (
     <div className="space-y-8">
       <AnalyticsHeader />
@@ -13,3 +13,5 @@ export const JobAnalytics = () => {
     </div>
   )
 };
+
+export default JobAnalytics;

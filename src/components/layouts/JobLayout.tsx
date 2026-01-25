@@ -1,8 +1,16 @@
-import DashboardNav from "@/features/borrower-dashboard/components/DashboardNav";
 import { Outlet } from "react-router-dom";
-import GlowBackground from "../utils/GlowBackground";
+import DashboardNav from "@/features/borrower-dashboard/components/DashboardNav";
+import GlowBackground from "@/components/utils/GlowBackground";
 
-export default function JobLayout() {
+export const ErrorBoundary = () => {
+  return(
+    <div className="h-screen w-screen flex items-center justify-center">
+      <h2 className="text-lg font-semibold">Something went wrong.</h2>
+    </div>
+  );
+}
+
+const JobLayout = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <GlowBackground />
@@ -15,3 +23,5 @@ export default function JobLayout() {
     </div>
   );
 }
+
+export default JobLayout;

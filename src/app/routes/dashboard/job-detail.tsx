@@ -20,7 +20,7 @@ import {
   List
 } from "lucide-react";
 
-export const JobDetail = () => {
+const JobDetail = () => {
   const { jobId } = useParams();
   const navigate = useNavigate();
   const jobs = useJobsStore((state) => state.jobs);
@@ -94,3 +94,5 @@ export const JobDetail = () => {
     </div>
   );
 };
+
+export default JobDetail;

@@ -1,19 +1,16 @@
 import { useMemo } from "react";
-import { QueryClient, useQueryClient } from "@tanstack/react-query";
+import { 
+  QueryClient,
+  useQueryClient
+} from "@tanstack/react-query";
 import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
 import { paths } from "@/config/paths";
-import { JobAnalytics } from "@/pages/JobAnalytics";
-import { JobDetail } from "@/pages/JobDetail";
-import { Signup } from "@/app/routes/auth/signup";
+import { ProtectedRoute } from "@/lib/auth";
 import MainLayout from "@/components/layouts/MainLayout";
-import JobLayout from "@/components/layouts/JobLayout";
-import Dashboard from "@/components/layouts/dashboard-layout";
-import NotFound from "@/app/routes/not-found";
-import JobPage from "@/pages/JobPage";
-import Login from "@/app/routes/auth/login";
-import LandingPage from "@/app/routes/landing";
-import UserSettings from "@/pages/UserSettings";
+import JobLayout, {
+  ErrorBoundary as JobLayoutErrorBoundary
+} from "@/components/layouts/JobLayout";
 
 const convert = (queryClient: QueryClient) => (m: any) => {
   const { clientLoader, clientAction, default: Component, ...rest } = m;
@@ -29,7 +26,13 @@ export const createCrowdCloudRouter = (queryClient: QueryClient) =>
   createBrowserRouter([
     {
       path: paths.home.path,
-      lazy: () => import("@/app/routes/landing").then(convert(queryClient)),
+      element: <MainLayout />,
+      children: [
+        {
+          index: true,
+          lazy: () => import("@/app/routes/landing").then(convert(queryClient)),
+        }
+      ],
     },
     {
       path: paths.auth.signup.path,
@@ -40,32 +43,42 @@ export const createCrowdCloudRouter = (queryClient: QueryClient) =>
       lazy: () => import("@/app/routes/auth/login").then(convert(queryClient)),
     },
     {
+      path: paths.app.dashboard.path,
+      element: (
+        <ProtectedRoute>
+          <JobLayout />
+        </ProtectedRoute>
+      ),
+      ErrorBoundary: JobLayoutErrorBoundary,
+      children: [
+        {
+          index: true,
+          path: paths.app.dashboard.path,
+          lazy: () => import("@/app/routes/dashboard/dashboard").then(convert(queryClient)),
+        },
+        {
+          path: paths.app.jobs.path,
+          lazy: () => import("@/app/routes/dashboard/jobs").then(convert(queryClient)),
+        },
+        {
+          path: paths.app.analytics.path,
+          lazy: () => import("@/app/routes/dashboard/analytics").then(convert(queryClient)),
+        },
+        {
+          path: paths.app.settings.path,
+          lazy: () => import("@/app/routes/dashboard/user-settings").then(convert(queryClient)),
+        }
+      ]
+    },
+    {
+      path: paths.app.job.path,
+      lazy: () => import("@/app/routes/dashboard/job-detail").then(convert(queryClient)),
+    },
+    {
       path: '*',
       lazy: () => import('@/app/routes/not-found').then(convert(queryClient)),
     },
   ]);
-
-export const routes = [
-  {
-    element: <MainLayout />,
-    children: [
-      { index: true, element: <LandingPage /> }
-    ]
-  },
-  {
-    element: <JobLayout />,
-    children: [
-      { index: true, path: "/dashboard", element: <Dashboard /> },
-      { path: "/dashboard/jobs", element: <JobPage /> },
-      { path: "/dashboard/analytics", element: <JobAnalytics /> },
-      { path: "/dashboard/user-settings", element: <UserSettings /> }
-    ],
-  },
-  { path: "/dashboard/jobs/:jobId", element: <JobDetail /> },
-  { path: "/signup", element: <Signup /> },
-  { path: "/login", element: <Login/> },
-  { path: "*", element: <NotFound /> },
-]
 
 export const AppRouter = () => {
   const queryClient = useQueryClient();
