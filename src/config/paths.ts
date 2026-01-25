@@ -11,13 +11,14 @@ export const paths = {
     },
     login: {
       path: "/login",
-      getHref: () => "/login"
+      getHref: (redirectTo?: string | null | undefined) => 
+        `/login${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`,
     }
   },
 
   app: {
     dashboard: {
-      path: "",
+      path: "/dashboard",
       getHref: () => "/dashboard"
     },
     jobs: {

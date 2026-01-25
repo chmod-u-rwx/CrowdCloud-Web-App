@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/avatar";
 import { LogOut, User } from "lucide-react";
 import { motion } from "framer-motion";
+import { paths } from "@/config/paths";
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -119,7 +120,7 @@ export const Navbar = () => {
                     className="cursor-pointer"
                     onClick={() => {
                       if (user && user.username) {
-                        navigate(`/dashboard`);
+                        navigate(paths.app.dashboard.getHref());
                       }
                     }}
                   >

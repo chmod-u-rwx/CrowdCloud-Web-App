@@ -3,24 +3,9 @@ import type {
   Job,
   JobCreate,
   JobUpdate,
-  LoginCredentials,
   Requests,
   RequestStatus,
-  User,
-  UserAuth,
-  UserCreate
 } from "@/types";
-
-// --- Auth API ---
-export async function signupUser(data: UserCreate): Promise<User> {
-  const response = await api.post<User>("/users/signup", data);
-  return response.data;
-}
-
-export async function loginUser(data: LoginCredentials): Promise<UserAuth> {
-  const response = await api.post<UserAuth>("/users/login", data);
-  return response.data;
-}
 
 // --- Job API ---
 export async function createJob(data: JobCreate): Promise<Job> {

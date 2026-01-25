@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import type { LoginCredentials } from "@/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "@/schema/schemas";
-import { loginUser } from "@/services/api";
+import { loginUser } from "@/lib/auth";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -12,8 +12,11 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const LoginForm = () => {
+  const queryClient = useQueryClient();
+
   const {
     register,
     handleSubmit,
@@ -34,6 +37,8 @@ export const LoginForm = () => {
     try {
       const authResponse = await loginUser(data);
       useAuthStore.getState().setUser(authResponse);
+      localStorage.setItem("access_token", authResponse.access_token);
+      await queryClient.invalidateQueries({ queryKey: ["user"] });
       reset();
       navigate("/dashboard", { replace: true });
       setLoginError(null);

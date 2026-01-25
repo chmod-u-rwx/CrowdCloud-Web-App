@@ -12,7 +12,10 @@ const authStoreLogic = persist<AuthStateStore>(
   (set) => ({
     user: null,
     setUser: (user) => set({ user }),
-    logout: () => set({ user: null }),
+    logout: () => {
+      localStorage.removeItem("access_token");
+      set({ user: null });
+    },
   }),
   {
     name: "user-auth-storage"
