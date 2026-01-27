@@ -1,22 +1,14 @@
 import { api } from "@/api/axios";
+import type { 
+  Job, 
+  JobUpdate
+} from "@/features/jobs/schemas/job.schema";
 import type {
-  Job,
-  JobCreate,
-  JobUpdate,
   Requests,
   RequestStatus,
 } from "@/types";
 
 // --- Job API ---
-export async function createJob(data: JobCreate): Promise<Job> {
-  try {
-    const response = await api.post<Job>("/job/create", data);
-    return response.data;
-  } catch (err: any) {
-    console.error("POST /job/create failed:", err?.response?.data || err);
-    throw err;
-  }
-}
 
 export async function getJob(job_id: string): Promise<Job> {
   const response = await api.get<Job>(`/job/get/${job_id}`);

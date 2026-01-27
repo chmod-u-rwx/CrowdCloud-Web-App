@@ -1,6 +1,6 @@
 import { useState } from "react";
-import type { JobCreate } from "@/types";
 import { useJobs } from "@/hooks/useJobs";
+import type { JobCreate } from "@/features/jobs/schemas/job.schema";
 import { JobOverviewStats } from "@/components/jobs/JobOverviewStats";
 import { JobList } from "@/components/jobs/JobList";
 import { JobCreationForm } from "@/components/jobs/JobCreationForm";

@@ -1,8 +1,10 @@
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { jobCreateSchema } from "@/schema/schemas";
-import type { InferType } from "yup";
-import type { JobCreate } from "@/types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { 
+  createJobInputSchema,
+  type CreateJobInput 
+} from "@/features/jobs/api/create-jobs";
+import { useAuthStore } from "@/stores/useAuthStore";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -18,9 +20,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Cpu, Loader2, MemoryStick, Plus } from "lucide-react";
-import { useAuthStore } from "@/stores/useAuthStore";
-
-type JobCreateFormData = InferType<typeof jobCreateSchema>;
+import type { JobCreate } from "@/features/jobs/schemas/job.schema";
 
 interface JobCreationFormProps {
   onCreateJob: (job: JobCreate) => Promise<void>;
@@ -37,8 +37,8 @@ export const JobCreationForm = ({
     formState: { errors, isSubmitting },
     reset,
     watch,
-  } = useForm<JobCreateFormData>({
-    resolver: yupResolver(jobCreateSchema),
+  } = useForm<CreateJobInput>({
+    resolver: zodResolver(createJobInputSchema),
     defaultValues: {
       job_name: "",
       repo_url: "",
@@ -53,7 +53,7 @@ export const JobCreationForm = ({
 
   const user = useAuthStore.getState().user;
 
-  const onSubmit = async (jobData: JobCreateFormData) => {
+  const onSubmit = async (jobData: CreateJobInput) => {
     if (!jobData) return;
 
     if (!user?.user_id) {
@@ -74,7 +74,7 @@ export const JobCreationForm = ({
 
     try {
       await onCreateJob(jobRequest);
-      console.log("Form Data:", jobData);
+      // console.log("Form Data:", jobData);
 
       toast.success("Job created successfully");
       reset();
@@ -149,7 +149,7 @@ export const JobCreationForm = ({
               <Textarea
                 {...register("job_description")}
                 placeholder="Describe what your job does, its requirements, and expected output..."
-                className={`bg-input border-2 min-h-[100px] ${
+                className={`bg-input border-2 min-h-25 ${
                   errors.job_description ? "border-destructive" : ""
                 }`}
               />
