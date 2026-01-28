@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { getJobStatusColor } from "@/utils/utility";
@@ -46,7 +46,7 @@ export const JobDetailsHeader = () => {
 
         <div className="flex justify-between">
           <Button
-            className="bg-gradient-to-r from-primary to-accent flex items-center gap-2"
+            className="bg-linear-to-r from-primary to-accent flex items-center gap-2"
             onClick={() => window.history.back()}
           >
             <ArrowLeft className="w-4 h-4" />
@@ -57,7 +57,7 @@ export const JobDetailsHeader = () => {
             {!isEditing ? (
               <Button
                 onClick={() => setIsEditing(true)}
-                className="flex items-center gap-2 bg-gradient-to-r from-primary to-accent-cyan"
+                className="flex items-center gap-2 bg-linear-to-r from-primary to-accent-cyan"
               >
                 <Edit3 className="w-4 h-4" />
                 Edit Job Details

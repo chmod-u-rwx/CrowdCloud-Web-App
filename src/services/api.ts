@@ -1,39 +1,8 @@
 import { api } from "@/api/axios";
-import type { 
-  Job, 
-  JobUpdate
-} from "@/features/jobs/schemas/job.schema";
 import type {
   Requests,
   RequestStatus,
 } from "@/types";
-
-// --- Job API ---
-
-export async function getJob(job_id: string): Promise<Job> {
-  const response = await api.get<Job>(`/job/get/${job_id}`);
-  return response.data;
-}
-
-// List jobs (optionally by user_id, with pagination)
-export async function listJobs(params?: {
-  user_id?: string;
-  skip?: number;
-  limit?: number;
-  newest_first?: boolean;
-}): Promise<Job[]> {
-  const response = await api.get<Job[]>("/job/list", { params });
-  return response.data;
-}
-
-export async function updateJob(job_id: string, data: JobUpdate): Promise<Job> {
-  const response = await api.put<Job>(`/job/update/${job_id}`, data);
-  return response.data;
-}
-
-export async function deleteJob(job_id: string): Promise<void> {
-  await api.delete(`/job/delete/${job_id}`);
-}
 
 // --- Request Metrics API ---
 export async function getResourceCostRate(): Promise<{ 

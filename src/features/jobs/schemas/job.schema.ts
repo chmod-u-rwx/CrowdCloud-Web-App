@@ -1,37 +1,17 @@
-export type JobStatus = "paused" | "running" | "completed" | "failed";
+import z from "zod";
 
-export interface JobResources {
-  cpu: number;
-  ram: number;
-}
+export const createJobInputSchema = z.object({
+  job_name: z.string().min(1, "Job Name is required"),
+  repo_url: z.url("Must be a valid URL").min(1, "Job URL is required"),
+  job_description: z.string().min(1, "Job Description is required"),
+  cpu: z
+    .number("CPU is required")
+    .min(1, "CPU must be at least 1 core")
+    .max(32, "CPU must not exceed to 32 cores"),
+  ram: z
+    .number("RAM is required")
+    .min(1, "RAM must be at least 1 GB")
+    .max(128, "RAM must not exceed to 128 GB")
+});
 
-export interface Job {
-  user_id: string;
-  job_id: string;
-  job_name: string;
-  repo_url: string;
-  job_description: string;
-  resources: JobResources;
-  status: JobStatus;
-  started_at?: string,
-  ended_at?: string;
-  created_at?: string;
-  updated_at?: string;
-};
-
-
-export interface JobCreate {
-  user_id: string;
-  job_name: string;
-  repo_url: string;
-  job_description: string;
-  resources: JobResources;
-};
-
-export interface JobUpdate {
-  job_name?: string;
-  job_description?: string;
-  repo_url?: string;
-  resources?: JobResources;
-  status?: JobStatus;
-}
+export type CreateJobInput = z.infer<typeof createJobInputSchema>;

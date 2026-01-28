@@ -3,7 +3,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { 
   createJobInputSchema,
   type CreateJobInput 
-} from "@/features/jobs/api/create-jobs";
+} from "@/features/jobs/schemas/job.schema";
+import type { JobCreate } from "@/types/jobs";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -20,7 +21,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Cpu, Loader2, MemoryStick, Plus } from "lucide-react";
-import type { JobCreate } from "@/features/jobs/schemas/job.schema";
 
 interface JobCreationFormProps {
   onCreateJob: (job: JobCreate) => Promise<void>;

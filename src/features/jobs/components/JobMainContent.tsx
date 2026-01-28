@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useJobs } from "@/hooks/useJobs";
-import type { JobCreate } from "@/features/jobs/schemas/job.schema";
-import { JobOverviewStats } from "@/components/jobs/JobOverviewStats";
-import { JobList } from "@/components/jobs/JobList";
-import { JobCreationForm } from "@/components/jobs/JobCreationForm";
+import type { JobCreate } from "@/types/jobs";
+import { JobOverviewStats } from "@/features/jobs/components/JobOverviewStats";
+import { JobList } from "@/features/jobs/components/JobList";
+import { JobCreationForm } from "@/features/jobs/components/JobCreationForm";
 import {
   Tabs,
   TabsContent,
