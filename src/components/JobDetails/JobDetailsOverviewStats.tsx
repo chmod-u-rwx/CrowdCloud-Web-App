@@ -1,5 +1,5 @@
 import { useJobsStore } from "@/stores/useJobsStore";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import { useRequestMetrics } from "@/hooks/useRequestMetrics";
 import { Card, CardContent } from "@/components/ui/card";
 import useMockLogs from "@/mock/mock-logs";

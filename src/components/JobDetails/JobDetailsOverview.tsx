@@ -1,17 +1,22 @@
 import { useEffect } from "react";
 import { useJobsStore } from "@/stores/useJobsStore";
-import { useParams } from "react-router-dom";
+import { updateJob as updateJobApi } from "@/services/routes/jobs";
+import { createJobInputSchema } from "@/features/jobs/schemas/job.schema";
+import { useParams } from "react-router";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { jobCreateSchema } from "@/schema/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { 
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle
+} from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
 import { Calendar, Cpu, MemoryStick, Settings } from "lucide-react";
-import { updateJob as updateJobApi } from "@/services/api";
 
 interface EditFormData {
   job_name: string;
@@ -39,7 +44,7 @@ export const JobDetailsOverview = () => {
     reset,
     formState: { errors },
   } = useForm<EditFormData>({
-    resolver: yupResolver(jobCreateSchema),
+    resolver: zodResolver(createJobInputSchema),
     defaultValues: {
       job_name: job?.job_name || "",
       repo_url: job?.repo_url || "",

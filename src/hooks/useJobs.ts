@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
+import type { JobCreate, JobUpdate } from "@/types/jobs";
 import { useJobsStore } from "@/stores/useJobsStore";
 import { useAuthStore } from "@/stores/useAuthStore";
-import { deleteJob, listJobs, updateJob } from "@/services/api";
-import { createJob } from "@/features/jobs/api/create-jobs";
-import type { JobCreate, JobUpdate } from "@/features/jobs/schemas/job.schema";
+import { createJob, listJobs, updateJob, deleteJob } from "@/services/routes/jobs";
 
 export const useJobs = () => {
   const [loading, setLoading] = useState<boolean>(false);

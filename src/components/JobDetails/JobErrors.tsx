@@ -1,7 +1,7 @@
 import useMockLogs from "@/mock/mock-logs";
 import { useJobsStore } from "@/stores/useJobsStore";
 import { format } from "date-fns";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import {
   Card,
   CardContent,
