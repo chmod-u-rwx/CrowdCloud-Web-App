@@ -1,5 +1,5 @@
-import { JobMainContent } from "@/features/jobs/components/JobMainContent";
-import { JobStats } from "@/features/jobs/components/JobStats";
+import { JobMainContent } from "@/features/jobs/components/jobs-main";
+import { JobStats } from "@/features/jobs/components/job-stats";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
