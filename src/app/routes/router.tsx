@@ -6,7 +6,7 @@ import {
 import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
 import { paths } from "@/config/paths";
-import { ProtectedRoute } from "@/lib/auth";
+import { ProtectedRoute } from "@/services/routes/auth";
 import MainLayout from "@/components/layouts/MainLayout";
 import JobLayout, {
   ErrorBoundary as JobLayoutErrorBoundary

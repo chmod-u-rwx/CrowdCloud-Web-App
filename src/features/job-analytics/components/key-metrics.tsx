@@ -1,4 +1,4 @@
-import { StatsCard } from "@/features/job-analytics/components/StatsCard";
+import { StatsCard } from "@/features/job-analytics/components/stats-card";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { useJobsStore } from "@/stores/useJobsStore";
 import { Cpu, PhilippinePeso, Send, Target } from "lucide-react";

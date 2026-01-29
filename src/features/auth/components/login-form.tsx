@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import type { LoginCredentials } from "@/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "@/schema/schemas";
-import { loginUser } from "@/lib/auth";
+import { loginUser } from "@/services/routes/auth";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";

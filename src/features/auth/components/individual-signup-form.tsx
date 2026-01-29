@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { userSchema } from "@/schema/schemas";
 import { Button } from "@/components/ui/button";
-import { signupUser } from "@/lib/auth";
+import { signupUser } from "@/services/routes/auth";
 import { useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 
