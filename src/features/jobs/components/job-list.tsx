@@ -1,4 +1,4 @@
-import type { Job } from "@/types";
+import type { Job } from "@/types/jobs";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getJobStats, getJobStatusColor } from "@/utils/utility";
@@ -128,7 +128,7 @@ export const JobList = ({
   };
 
   return (
-    <div className="space-y-6 max-h-[300px] md:max-h-[580px] overflow-auto no-scrollwidth">
+    <div className="space-y-6 max-h-75 md:max-h-145 overflow-auto no-scrollwidth">
       {/* Header */}
       <div className="space-y-2 mt-2">
         <h2 className="font-semibold font-rubik">
