@@ -2,7 +2,6 @@ import { BarChart3, Filter } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import type { TimePeriod } from "@/types";
 import { Button } from "@/components/ui/button";
-// import { useJobsStore } from "@/stores/useJobsStore";
 import { useAnalyticsStore } from "@/stores/useAnalyticsStore";
 
 export default function AnalyticsHeader() {

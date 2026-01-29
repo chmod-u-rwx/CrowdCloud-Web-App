@@ -1,6 +1,6 @@
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { useJobsStore } from "@/stores/useJobsStore";
-import { StatsCard } from "@/features/job-analytics/components/StatsCard";
+import { StatsCard } from "@/features/job-analytics/components/stats-card";
 import { BriefcaseBusiness, Globe, MemoryStick, Zap } from "lucide-react";
 
 export const TrafficMetrics = () => {

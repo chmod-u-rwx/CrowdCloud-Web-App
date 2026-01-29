@@ -1,5 +1,5 @@
-import { TrendingDown, TrendingUp, type LucideIcon } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { TrendingDown, TrendingUp, type LucideIcon } from "lucide-react";
 
 export const StatsCard = ({
   title,

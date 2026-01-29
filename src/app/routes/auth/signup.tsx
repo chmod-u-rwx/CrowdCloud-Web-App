@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import {
   Card,
   CardContent,
@@ -16,8 +16,8 @@ import {
 } from "@/components/ui/tabs";
 import AuthLogo from "@/components/utils/AuthLogo";
 import GlowBackground from "@/components/utils/GlowBackground";
-import { IndividualSignupForm } from "@/features/auth/components/IndividualSignupForm";
-import { CompanySignupForm } from "@/features/auth/components/CompanySignupForm";
+import { IndividualSignupForm } from "@/features/auth/components/individual-signup-form";
+import { CompanySignupForm } from "@/features/auth/components/company-signup-form";
 
 const Signup = () => {
   const [activeTab, setActiveTab] = useState("individual");

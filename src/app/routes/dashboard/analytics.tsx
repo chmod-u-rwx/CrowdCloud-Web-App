@@ -1,7 +1,7 @@
-import AnalyticsHeader from "@/features/job-analytics/components/AnalyticsHeader"
-import { ChartAnalytics } from "@/features/job-analytics/components/ChartAnalytics";
-import { KeyMetrics } from "@/features/job-analytics/components/KeyMetrics";
-import { TrafficMetrics } from "@/features/job-analytics/components/TrafficMetrics";
+import AnalyticsHeader from "@/features/job-analytics/components/header"
+import { ChartAnalytics } from "@/features/job-analytics/components/chart-analytics";
+import { KeyMetrics } from "@/features/job-analytics/components/key-metrics";
+import { TrafficMetrics } from "@/features/job-analytics/components/traffic-metrics";
 
 const JobAnalytics = () => {
   return (
