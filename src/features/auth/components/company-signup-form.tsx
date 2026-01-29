@@ -1,5 +1,3 @@
-import { yupResolver } from "@hookform/resolvers/yup";
-import { companyUserSchema } from "@/schema/schemas";
 import { useForm } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -7,19 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { signupUser } from "@/services/routes/auth";
 import { useNavigate } from "react-router";
-
-type CompanySignupFormData = {
-  username: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  company_name: string;
-  company_address: string;
-  phone_number: string;
-  password: string;
-  confirm_password: string;
-  role: "company";
-};
+import { zodResolver } from "@hookform/resolvers/zod";
+import { registerInputSchema, type RegisterInput } from "@/schema/auth.schema";
 
 export const CompanySignupForm = () => {
   const navigate = useNavigate();
@@ -29,8 +16,8 @@ export const CompanySignupForm = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<CompanySignupFormData>({
-    resolver: yupResolver(companyUserSchema),
+  } = useForm<RegisterInput>({
+    resolver: zodResolver(registerInputSchema),
     defaultValues: {
       username: "",
       first_name: "",
@@ -45,7 +32,7 @@ export const CompanySignupForm = () => {
     },
   });
 
-  const onSubmit = async (data: CompanySignupFormData) => {
+  const onSubmit = async (data: RegisterInput) => {
     try {
       await signupUser(data);
       console.log("Sign up data:", data);
