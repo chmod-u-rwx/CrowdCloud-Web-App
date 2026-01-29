@@ -1,23 +1,12 @@
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { registerInputSchema, type RegisterInput } from "@/schema/auth.schema";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { userSchema } from "@/schema/schemas";
 import { Button } from "@/components/ui/button";
 import { signupUser } from "@/services/routes/auth";
 import { useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
-
-type IndividualSignupFormData = {
-  username: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone_number: string;
-  password: string;
-  confirm_password: string;
-  role: "individual";
-};
 
 export const IndividualSignupForm = () => {
   const navigate = useNavigate();
@@ -27,8 +16,8 @@ export const IndividualSignupForm = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<IndividualSignupFormData>({
-    resolver: yupResolver(userSchema),
+  } = useForm<RegisterInput>({
+    resolver: zodResolver(registerInputSchema),
     defaultValues: {
       username: "",
       first_name: "",
@@ -41,7 +30,7 @@ export const IndividualSignupForm = () => {
     },
   });
 
-  const onSubmit = async (data: IndividualSignupFormData) => {
+  const onSubmit = async (data: RegisterInput) => {
     try {
       await signupUser(data);
       reset();
