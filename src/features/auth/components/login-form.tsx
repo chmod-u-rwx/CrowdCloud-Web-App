@@ -1,9 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import type { LoginCredentials } from "@/types";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { loginSchema } from "@/schema/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { loginUser } from "@/services/routes/auth";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { Label } from "@/components/ui/label";
@@ -13,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
+import { loginInputSchema, type LoginInput } from "@/schema/auth.schema";
 
 export const LoginForm = () => {
   const queryClient = useQueryClient();
@@ -22,8 +21,8 @@ export const LoginForm = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<LoginCredentials>({
-    resolver: yupResolver(loginSchema),
+  } = useForm<LoginInput>({
+    resolver: zodResolver(loginInputSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -33,7 +32,7 @@ export const LoginForm = () => {
   const navigate = useNavigate();
   const [loginError, setLoginError] = useState<string | null>(null);
 
-  const onSubmit = async (data: LoginCredentials) => {
+  const onSubmit = async (data: LoginInput) => {
     try {
       const authResponse = await loginUser(data);
       useAuthStore.getState().setUser(authResponse);
