@@ -41,7 +41,6 @@ export const LoginForm = () => {
       reset();
       navigate("/dashboard", { replace: true });
       setLoginError(null);
-      window.location.reload();
     } catch (error: any) {
       if(error?.response?.status === 500 || error?.status === 500) {
         setLoginError("Internal Server Error. Please try again later.");
