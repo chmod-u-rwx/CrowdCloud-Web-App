@@ -2,7 +2,7 @@ import { useAuthStore } from "@/stores/useAuthStore";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { ProfileForm } from "@/components/UserSetting/ProfileForm";
+import { ProfileForm } from "@/features/user-settings/components/profile-form";
 import {
   Card,
   CardContent,

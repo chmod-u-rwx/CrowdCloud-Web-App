@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { AccountForm } from "@/components/UserSetting/AccountForm";
+import { AccountForm } from "@/features/user-settings/components/account-form";
 
 export default function AccountProfile() {
   return (
