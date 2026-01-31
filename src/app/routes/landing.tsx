@@ -1,7 +1,7 @@
-import About  from "@/app/routes/sections/About";
-import Download from "@/app/routes/sections/Download";
-import { Features } from "@/app/routes/sections/Features";
-import { Hero } from "@/app/routes/sections/Hero";
+import About  from "@/app/routes/sections/about";
+import Download from "@/app/routes/sections/download";
+import { Features } from "@/app/routes/sections/features";
+import { Hero } from "@/app/routes/sections/hero";
 import Footer from "@/components/footer";
 
 const LandingPage = () => {

@@ -7,7 +7,7 @@ import type {
   User,
   UserAuth,
   UserCreate
-} from "@/types";
+} from "@/types/users";
 import { useQuery } from "@tanstack/react-query";
 
 export async function signupUser(data: UserCreate): Promise<User> {

@@ -7,10 +7,10 @@ import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
 import { paths } from "@/config/paths";
 import { ProtectedRoute } from "@/services/routes/auth";
-import MainLayout from "@/components/layouts/MainLayout";
+import MainLayout from "@/components/layouts/main-layout";
 import JobLayout, {
   ErrorBoundary as JobLayoutErrorBoundary
-} from "@/components/layouts/JobLayout";
+} from "@/components/layouts/job-layout";
 
 const convert = (queryClient: QueryClient) => (m: any) => {
   const { clientLoader, clientAction, default: Component, ...rest } = m;

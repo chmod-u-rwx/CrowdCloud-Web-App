@@ -1,18 +1,13 @@
 import { useEffect } from "react";
-import { profileUpdateSchema } from "@/schema/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  profileUpdateInputSchema,
+  type ProfileUpdateInput
+} from "@/features/user-settings/schemas/user-settings.schema";
 import { useAuthStore } from "@/stores/useAuthStore";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-
-interface EditFormData {
-  first_name: string;
-  last_name: string;
-  username: string;
-  company_name: string;
-  company_address: string;
-}
 
 export const ProfileForm = () => {
   const user = useAuthStore((state) => state.user);
@@ -21,8 +16,8 @@ export const ProfileForm = () => {
     register,
     formState: { errors },
     reset,
-  } = useForm<EditFormData>({
-    resolver: yupResolver(profileUpdateSchema),
+  } = useForm<ProfileUpdateInput>({
+    resolver: zodResolver(profileUpdateInputSchema),
     defaultValues: {
       first_name: user?.first_name || "",
       last_name: user?.last_name || "",

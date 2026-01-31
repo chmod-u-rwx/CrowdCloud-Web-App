@@ -1,6 +1,10 @@
-import { accountUpdateSchema } from "@/schema/schemas";
+// import { accountUpdateSchema } from "@/schema/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  accountUpdateInputSchema,
+  type AccountUpdateInput
+} from "@/features/user-settings/schemas/user-settings.schema";
 import { useAuthStore } from "@/stores/useAuthStore";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -8,22 +12,14 @@ import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Save, Shield } from "lucide-react";
 
-interface EditFormData {
-  email: string;
-  password: string;
-  confirm_password: string;
-  new_password: string;
-}
-
 export const AccountForm = () => {
   const user = useAuthStore((state) => state.user);
 
   const {
     register,
     formState: { errors },
-    reset,
-  } = useForm<EditFormData>({
-    resolver: yupResolver(accountUpdateSchema),
+  } = useForm<AccountUpdateInput>({
+    resolver: zodResolver(accountUpdateInputSchema),
     defaultValues: {
       email: user?.email || "",
       password: "",
