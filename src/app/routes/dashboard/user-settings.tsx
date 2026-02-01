@@ -1,8 +1,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BillingSetting } from "@/components/UserSetting/BillingSetting";
-import AccountProfile from "@/components/UserSetting/AccountProfile";
-import UserHeader from "@/components/UserSetting/UserHeader";
-import UserProfile from "@/components/UserSetting/UserProfile";
+import { BillingSetting } from "@/features/user-settings/components/billing-settings";
+import AccountProfile from "@/features/user-settings/components/account-profile";
+import UserHeader from "@/features/user-settings/components/header";
+import UserProfile from "@/features/user-settings/components/user-profile";
 
 export default function UserSettings() {
   return (

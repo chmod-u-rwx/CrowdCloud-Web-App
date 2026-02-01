@@ -1,7 +1,10 @@
+import { useMemo } from "react";
+import { useParams } from "react-router";
 import { useAnalyticsStore } from "@/stores/useAnalyticsStore";
 import { useJobsStore } from "@/stores/useJobsStore";
 import { useRequestMetrics } from "@/hooks/useRequestMetrics";
-import type { Job, Requests, } from "@/types";
+import type { Requests, } from "@/types";
+import type { Job } from "@/types/jobs";
 import {
   getBasicJobStats,
   getDateRange,
@@ -19,15 +22,11 @@ import {
   startOfWeek, 
   subDays 
 } from "date-fns";
-import { useMemo } from "react";
-import { useParams } from "react-router-dom";
+import { CHART_COLORS } from "@/app/constants/utils";
 
 interface UseAnalyticsProps {
   jobs: Job[];
 }
-
-// Running -> Completed -> Paused -> Failed
-const CHART_COLORS = ["#49067C", "#9C7DFF", "#F4BE37", "#FF4D9E"];
 
 export const useAnalytics = ({ jobs }: UseAnalyticsProps) => {
   const { jobId } = useParams();
