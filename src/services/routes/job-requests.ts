@@ -1,10 +1,9 @@
 import { api } from "@/api/axios";
-import type {
+import type { 
   Requests,
-  RequestStatus,
-} from "@/types";
+  RequestStatus
+} from "@/types/job-requests";
 
-// --- Request Metrics API ---
 export async function getResourceCostRate(): Promise<{ 
   cpu_core_cost_per_second: number;
   ram_gb_cost_per_second: number;
@@ -55,4 +54,12 @@ export async function averageStatusRequests(params?: {
 }): Promise<number> {
   const response = await api.get<{ average_status: number }>("/requests/average/status", { params });
   return response.data.average_status;
+}
+
+export interface RequestMetricsParams {
+  job_id?: string;
+  worker_id?: string;
+  status?: RequestStatus;
+  start_time?: string;
+  end_time?: string;
 }

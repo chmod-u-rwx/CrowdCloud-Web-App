@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { listRequests } from "@/services/api";
+import { listRequests } from "@/services/routes/job-requests";
 
 export function useJobRequests(params?: {
   job_id?: string;
