@@ -1,8 +1,8 @@
 import { useParams } from "react-router";
+import { useJobsStore } from "@/stores/useJobsStore";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { getJobStatusColor } from "@/utils/utility";
-import { useJobsStore } from "@/stores/useJobsStore";
 import { ArrowLeft, Edit3, Save, X } from "lucide-react";
 
 export const JobDetailsHeader = () => {
