@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { useJobsStore } from "@/stores/useJobsStore";
-import { getTransactionSummary } from "@/features/borrower-dashboard/api/job-transaction";
+import { getTransactionSummary } from "@/services/routes/job-transaction";
 import {
   Card,
   CardContent,

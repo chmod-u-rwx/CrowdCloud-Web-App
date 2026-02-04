@@ -1,4 +1,4 @@
-import type { Requests } from "@/types";
+import type { Requests } from "@/types/job-requests";
 import { format, subHours } from "date-fns";
 
 export function getHourlyRequestVolume(

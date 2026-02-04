@@ -1,7 +1,6 @@
 import { api } from "@/api/axios";
 import { Navigate, useLocation } from "react-router";
 import { paths } from "@/config/paths";
-import { useAuthStore } from "@/stores/useAuthStore";
 import type { 
   LoginCredentials,
   User,
@@ -9,6 +8,7 @@ import type {
   UserCreate
 } from "@/types/users";
 import { useQuery } from "@tanstack/react-query";
+import { Spinner } from "@/components/ui/spinner";
 
 export async function signupUser(data: UserCreate): Promise<User> {
   const response = await api.post<User>("/users/signup", data);
@@ -36,10 +36,12 @@ export const useUser = () =>
 export const ProtectedRoute = (
   { children }: { children: React.ReactNode }
 ) => {
-  const user = useAuthStore((state) => state.user);
+  const { data: user, isLoading, isError } = useUser();
   const location = useLocation();
 
-  if(!user) {
+  if (isLoading) return <Spinner />
+
+  if(!user || isError) {
     return(
       <Navigate to={
         paths.auth.login.getHref(location.pathname)

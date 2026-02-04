@@ -1,4 +1,5 @@
-import type { Requests, TimePeriod } from "@/types";
+import type { TimePeriod } from "@/types";
+import type { Requests } from "@/types/job-requests";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 

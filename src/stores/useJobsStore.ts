@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { Job } from "@/types";
+import type { Job } from "@/types/jobs";
 
 interface JobState {
   jobs: Job[];
