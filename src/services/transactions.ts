@@ -8,7 +8,7 @@ import {
   getTransaction,
   getTransactionHistory,
   getTransactionSummary
-} from "@/features/borrower-dashboard/api/job-transaction";
+} from "@/services/routes/job-transaction";
 
 // Create Transactions (Mutation)
 export function useCreateTransactions() {
