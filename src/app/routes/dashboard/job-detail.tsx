@@ -1,16 +1,21 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useJobsStore } from "@/stores/useJobsStore";
-import { JobDetailsHeader } from "@/components/JobDetails/JobDetailsHeader";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { JobDetailsOverview } from "@/components/JobDetails/JobDetailsOverview";
+import { JobDetailsHeader } from "@/features/job-details/components/headers";
+import { 
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger
+} from "@/components/ui/tabs";
+import { JobDetailsOverview } from "@/features/job-details/components/overview";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { JobDetailsOverviewStats } from "@/components/JobDetails/JobDetailsOverviewStats";
-import JobTraffic from "@/components/JobDetails/JobTraffic";
-import JobErrors from "@/components/JobDetails/JobErrors";
+import { JobDetailsOverviewStats } from "@/features/job-details/components/stats-overview";
+import JobTraffic from "@/features/job-details/components/job-traffic";
+import JobErrors from "@/features/job-details/components/job-errors";
 import GlowBackground from "@/components/utils/GlowBackground";
-import JobRequests from "@/components/JobDetails/JobRequests";
+import JobRequests from "@/features/job-details/components/job-requests";
 import { 
   AlertTriangle,
   ArrowLeft,
