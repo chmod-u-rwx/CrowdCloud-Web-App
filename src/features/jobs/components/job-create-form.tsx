@@ -27,10 +27,7 @@ interface JobCreationFormProps {
   loading?: boolean;
 }
 
-export const JobCreationForm = ({
-  onCreateJob,
-  loading = false,
-}: JobCreationFormProps) => {
+export const JobCreationForm = (props: JobCreationFormProps) => {
   const {
     register,
     handleSubmit,
@@ -73,7 +70,7 @@ export const JobCreationForm = ({
     };
 
     try {
-      await onCreateJob(jobRequest);
+      await props.onCreateJob(jobRequest);
       // console.log("Form Data:", jobData);
 
       toast.success("Job created successfully");
@@ -254,9 +251,9 @@ export const JobCreationForm = ({
           <Button
             type="submit"
             className="w-full cursor-pointer"
-            disabled={loading || isSubmitting}
+            disabled={props.loading || isSubmitting}
           >
-            {loading || isSubmitting ? (
+            {props.loading || isSubmitting ? (
               <>
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                 Creating Job...
