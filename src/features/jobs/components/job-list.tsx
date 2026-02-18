@@ -32,14 +32,10 @@ interface JobListProps {
   onUpdateStatus: (jobId: string, status: Job["status"]) => void;
 }
 
-export const JobList = ({
-  jobs,
-  onDeleteJob,
-  onUpdateStatus,
-}: JobListProps) => {
+export const JobList = (props: JobListProps) => {
   const navigate = useNavigate();
   const [loadingJobs, setLoadingJobs] = useState<Set<string>>(new Set());
-  const stats = getJobStats(jobs);
+  const stats = getJobStats(props.jobs);
 
   const handleJobStatusUpdate = async (
     job_id: string,
@@ -47,7 +43,7 @@ export const JobList = ({
   ) => {
     setLoadingJobs((prev) => new Set(prev).add(job_id));
 
-    onUpdateStatus(job_id, newStatus);
+    props.onUpdateStatus(job_id, newStatus);
     setLoadingJobs((prev) => {
       const newSet = new Set(prev);
       newSet.delete(job_id);
@@ -107,7 +103,7 @@ export const JobList = ({
     }
   };
 
-  if (jobs.length === 0) {
+  if (props.jobs.length === 0) {
     return (
       <Card className="shadow-lg border-0 bg-secondary backdrop-blur-sm mt-4">
         <CardContent className="p-8 text-center">
@@ -137,7 +133,7 @@ export const JobList = ({
       </div>
 
       {/* Job List */}
-      {jobs.map((job) => (
+      {props.jobs.map((job) => (
         <Card
           key={job.job_id}
           className="shadow shadow-accent-shadow border-0 bg-secondary backdrop-blur-sm hover:shadow-lg transition-shadow"
@@ -241,7 +237,7 @@ export const JobList = ({
                 <Button
                   size="sm"
                   variant="destructive"
-                  onClick={() => onDeleteJob(job.job_id)}
+                  onClick={() => props.onDeleteJob(job.job_id)}
                   className="flex items-center gap-1 text-destructive bg-transparent border border-destructive hover:text-destructive/90 hover:border-red-700 hover:bg-transparent"
                 >
                   <Trash2 className="w-3 h-3" />
