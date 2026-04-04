@@ -37,3 +37,11 @@ export interface Requests {
   execution_time: string;
   transaction_id: string;
 }
+
+export interface RequestMetricsParams {
+  job_id?: string;
+  worker_id?: string;
+  status?: RequestStatus;
+  start_time?: string;
+  end_time?: string;
+}

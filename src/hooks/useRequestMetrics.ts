@@ -1,6 +1,6 @@
-import { listRequests } from "@/services/api";
+import { listRequests } from "@/services/routes/job-requests";
 import { useAnalyticsStore } from "@/stores/useAnalyticsStore";
-import type { RequestMetricsParams } from "@/types";
+import type { RequestMetricsParams } from "@/types/job-requests";
 import { useEffect, useMemo } from "react";
 
 export const useRequestMetrics = (
